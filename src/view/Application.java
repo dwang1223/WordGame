@@ -14,6 +14,7 @@ import model.Model;
 import controller.AddWordController;
 import controller.ConnectWordController;
 import controller.DisconnectWordController;
+import controller.MoveRowController;
 import controller.MoveWordController;
 import controller.PublishController;
 import controller.RemoveWordController;
@@ -37,7 +38,8 @@ public class Application extends JFrame {
 
 	JButton addButton;
 	JButton removeButton;
-	JButton moveButton;
+	JButton moveWordButton;
+	JButton moveRowButton;
 	JButton connectButton;
 	JButton disconnectButton;
 	JButton publishButton;
@@ -54,6 +56,7 @@ public class Application extends JFrame {
 		setSize(Board.widthOfFrame, Board.heightOfFrame);
 		setLayout(null);
 		setLocationRelativeTo(null);
+		setResizable(false);
 
 		Container pane = this.getContentPane();
 		setBackground(Color.GRAY);
@@ -69,15 +72,18 @@ public class Application extends JFrame {
 		removeButton = new JButton("Remove");
 		topMenuPanel.add(removeButton);
 
-		moveButton = new JButton("Move");
-		topMenuPanel.add(moveButton);
+		moveWordButton = new JButton("Move Word");
+		topMenuPanel.add(moveWordButton);
+
+		moveRowButton = new JButton("Move Row");
+		topMenuPanel.add(moveRowButton);
 
 		connectButton = new JButton("Connect");
 		topMenuPanel.add(connectButton);
-		
+
 		disconnectButton = new JButton("Disconnect");
 		topMenuPanel.add(disconnectButton);
-		
+
 		pane.add(topMenuPanel); // at top
 
 		// Where words appear
@@ -98,7 +104,7 @@ public class Application extends JFrame {
 
 		redoButton = new JButton("Redo");
 		bottomMenuPanel.add(redoButton);
-		
+
 		publishButton = new JButton("Publish");
 		bottomMenuPanel.add(publishButton);
 
@@ -139,8 +145,8 @@ public class Application extends JFrame {
 				new RemoveWordController(model, panel).register();
 			}
 		});
-		
-		moveButton.addActionListener(new ActionListener() {
+
+		moveWordButton.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
@@ -148,7 +154,16 @@ public class Application extends JFrame {
 				new MoveWordController(model, Application.this).register();
 			}
 		});
-		
+
+		moveRowButton.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				// register controller
+				new MoveRowController(model, Application.this).register();
+			}
+		});
+
 		connectButton.addActionListener(new ActionListener() {
 
 			@Override
@@ -157,13 +172,14 @@ public class Application extends JFrame {
 				new ConnectWordController(model, Application.this).register();
 			}
 		});
-		
+
 		disconnectButton.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				// register controller
-				new DisconnectWordController(model, Application.this).register();
+				new DisconnectWordController(model, Application.this)
+						.register();
 			}
 		});
 	}

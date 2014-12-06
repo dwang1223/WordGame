@@ -3,7 +3,6 @@ package model;
 import java.util.Stack;
 
 import controller.Move;
-import controller.MoveWord;
 
 /**
  * Model Class
@@ -17,7 +16,8 @@ public class Model {
 	Stack<Move> moves = new Stack<Move>();
 
 	/** Currently selected shape (or null if none). */
-	Word selected;
+	Word selectedWord;
+	Row selectedRow;
 
 	public Model(Board b) {
 		board = b;
@@ -37,7 +37,7 @@ public class Model {
 
 	public void recordMove(Move move) {
 		moves.add(move);
-//		System.out.println("recordMove_moves size: " + moves.size());
+		// System.out.println("recordMove_moves size: " + moves.size());
 	}
 
 	public Move removeLastMove() {
@@ -47,15 +47,24 @@ public class Model {
 		return moves.pop();
 	}
 
-	public int getMovesSize(){
+	public int getMovesSize() {
 		return moves.size();
 	}
-	
-	public void setSelected(Word word) {
-		selected = word;
+
+	public void setSelectedWord(Word word) {
+		this.selectedWord = word;
 	}
 
-	public Word getSelected() {
-		return selected;
+	public Word getSelectedWord() {
+		return selectedWord;
 	}
+
+	public Row getSelectedRow() {
+		return selectedRow;
+	}
+
+	public void setSelectedRow(Row selectedRow) {
+		this.selectedRow = selectedRow;
+	}
+
 }

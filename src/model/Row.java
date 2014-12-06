@@ -31,7 +31,13 @@ public class Row implements Serializable {
 	}
 
 	public void setLocation(int x, int y) {
-		wordList.get(0).setLocation(x, y);
+		int xofWord = x;
+		int yofWord = y;
+		for (int i = 0; i < wordList.size(); i++) {
+			Word w = wordList.get(i);
+			w.setLocation(xofWord, yofWord);
+			xofWord = xofWord + w.getWidth();
+		}
 	}
 
 	public int getX() {

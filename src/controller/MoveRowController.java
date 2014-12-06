@@ -4,9 +4,11 @@ import java.awt.Point;
 import java.awt.Toolkit;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 
 import model.Board;
 import model.Model;
+import model.Row;
 import model.Word;
 import util.CloneUtils;
 import view.Application;
@@ -18,18 +20,16 @@ import view.ApplicationPanel;
  * @author diwang
  *
  */
-public class MoveWordController extends MouseAdapter {
+public class MoveRowController extends MouseAdapter {
 
 	/** Needed for controller behavior. */
 	Model model;
 	Application app;
 	ApplicationPanel panel;
 
-	/** Original x,y where word was before move. */
+	/** Original x,y where row was before move. */
 	int originalx;
 	int originaly;
-	/** Original isProtected whether word was before move. */
-	boolean originalIsProtected;
 	Board originalBoard;
 
 	/** Anchor point where first grabbed and delta from that location. */
@@ -41,7 +41,7 @@ public class MoveWordController extends MouseAdapter {
 	int buttonType;
 
 	/** Constructor holds onto key manager objects. */
-	public MoveWordController(Model model, Application app) {
+	public MoveRowController(Model model, Application app) {
 		this.model = model;
 		this.app = app;
 		this.panel = app.getWordPanel();
@@ -92,7 +92,7 @@ public class MoveWordController extends MouseAdapter {
 
 		boolean ok = true;
 
-		if (word.isInRow()) {
+		if (!word.isInRow()) {
 			ok = false;
 		}
 		if (!ok) {
@@ -101,11 +101,16 @@ public class MoveWordController extends MouseAdapter {
 		} else {
 			// no longer in the board since we are moving it around...
 			originalBoard = CloneUtils.clone(model.getBoard());
-			model.getBoard().removeWord(word);
-			model.setSelectedWord(word);
-			originalx = word.getX();
-			originaly = word.getY();
-			originalIsProtected = word.isProtected();
+			// move the row where the word is
+			ArrayList<Row> rows = model.getBoard().rows;
+			Row row = model.getBoard().getRowFromRowListByWord(rows, word);
+//			for (Word w : row.getWordList()) {
+//				System.out.println(w.getContent() + " " + w.getX() + " "
+//						+ w.getY());
+//			}
+			model.setSelectedRow(row);
+			originalx = row.getX();
+			originaly = row.getY();
 
 			// set anchor for smooth moving
 			deltaX = anchor.x - originalx;
@@ -124,76 +129,63 @@ public class MoveWordController extends MouseAdapter {
 		if (buttonType == MouseEvent.BUTTON3) {
 			return false;
 		}
-		Word selected = model.getSelectedWord();
-
-		if (selected == null) {
+		Row selectedRow = model.getSelectedRow();
+		if (selectedRow == null) {
 			return false;
 		}
 
-		panel.paintBackground(selected);
-		int oldx = selected.getX();
-		int oldy = selected.getY();
-
-		selected.setLocation(x - deltaX, y - deltaY);
+		for (Word word : selectedRow.getWordList()) {
+			panel.paintBackground(word);
+		}
+		int oldx = selectedRow.getX();
+		int oldy = selectedRow.getY();
+		selectedRow.setLocation(x - deltaX, y - deltaY);
 
 		boolean ok = true;
-		// judge whether protect or release word
-		if (Board.isOutOfUnprotectedArea(selected)) {
-			// protect word
-			for (Word word : model.getBoard().words) {
-				// judge whether intersect
-				if (word.intersects(selected)) {
-					ok = false;
-					break;
-				}
-				// judge whether out of bound
-				else if (Board.isOutOfBound(selected)) {
-					ok = false;
-					break;
+		ArrayList<Row> rows = model.getBoard().rows;
+		for (Word word : selectedRow.getWordList()) {
+			// judge whether out of bound
+			if (Board.isOutOfProtectedArea(word)) {
+				ok = false;
+			} else {
+				for (Word w : model.getBoard().words) {
+					Row row = model.getBoard().getRowFromRowListByWord(rows, w);
+					// judge whether intersect
+					if (row != selectedRow) {
+						// if w is not in the row where word is in
+						if (w.intersects(word)) {
+							ok = false;
+							break;
+						}
+					}
 				}
 			}
 		}
 
 		if (!ok) {
-			selected.setLocation(oldx, oldy);
+			selectedRow.setLocation(oldx, oldy);
 		} else {
-			panel.paintWord(selected);
+			panel.redraw();
 			panel.repaint();
 		}
-
 		return true;
 	}
 
 	/** Separate out this function for testing purposes. */
 	protected boolean release(int x, int y) {
-		Word selected = model.getSelectedWord();
-		if (selected == null) {
+		Row selectedRow = model.getSelectedRow();
+		if (selectedRow == null) {
 			return false;
 		}
-		// if move the word to the border of two areas
-		if (selected.getY() > (Board.heightOfProtectedArea - selected
-				.getHeight()) && selected.getY() < Board.heightOfProtectedArea) {
-			selected.setLocation(selected.getX(), Board.heightOfProtectedArea);
-		}
-		// judge whether protect or release word
-		if (Board.isOutOfUnprotectedArea(selected)) {
-			// protect word
-			selected.setProtected(true);
-		} else {
-			selected.setProtected(false);
-		}
-
 		// now released we can create Move
-		model.getBoard().addWord(selected);
-		MoveWord move = new MoveWord(selected, originalx, originaly,
-				selected.getX(), selected.getY(), originalIsProtected,
-				selected.isProtected(), originalBoard, model);
+		MoveRow move = new MoveRow(selectedRow, originalx, originaly,
+				selectedRow.getX(), selectedRow.getY(), originalBoard, model);
 		if (move.execute()) {
 			model.recordMove(move);
 		}
 
 		// no longer selected
-		model.setSelectedWord(null);
+		model.setSelectedRow(null);
 
 		panel.redraw();
 		panel.repaint();

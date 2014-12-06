@@ -111,7 +111,7 @@ public class DisconnectWordController extends MouseAdapter {
 			// no longer in the board since we are moving it around...
 			originalBoard = CloneUtils.clone(model.getBoard());
 			model.getBoard().removeWord(word);
-			model.setSelected(word);
+			model.setSelectedWord(word);
 			originalx = word.getX();
 			originaly = word.getY();
 			originalIsInRow = word.isInRow();
@@ -142,7 +142,7 @@ public class DisconnectWordController extends MouseAdapter {
 		if (buttonType == MouseEvent.BUTTON3) {
 			return false;
 		}
-		Word selected = model.getSelected();
+		Word selected = model.getSelectedWord();
 
 		if (selected == null) {
 			return false;
@@ -181,7 +181,7 @@ public class DisconnectWordController extends MouseAdapter {
 
 	/** Separate out this function for testing purposes. */
 	protected boolean release(int x, int y) {
-		Word selected = model.getSelected();
+		Word selected = model.getSelectedWord();
 		if (selected == null) {
 			return false;
 		}
@@ -196,7 +196,7 @@ public class DisconnectWordController extends MouseAdapter {
 		}
 
 		// no longer selected
-		model.setSelected(null);
+		model.setSelectedWord(null);
 
 		panel.redraw();
 		panel.repaint();

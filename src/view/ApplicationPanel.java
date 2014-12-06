@@ -116,7 +116,7 @@ public class ApplicationPanel extends JPanel {
 				Board.heightOfProtectedArea);
 
 		// draw selected
-		Word selected = model.getSelected();
+		Word selected = model.getSelectedWord();
 		if (selected != null) {
 			paintWord(g, selected);
 		}
@@ -132,7 +132,7 @@ public class ApplicationPanel extends JPanel {
 		if (g == null) {
 			return;
 		}
-//		this.showBoardState();
+		 this.showBoardState();
 		if (word.isProtected()) {
 			g.setColor(Color.WHITE);
 			if (word.isInRow()) {
@@ -165,10 +165,11 @@ public class ApplicationPanel extends JPanel {
 		ArrayList<Word> words = model.getBoard().words;
 		ArrayList<Row> rows = model.getBoard().rows;
 		System.out.println("Words");
-		System.out.println("content   isProtected   isInRow");
+		System.out.println("content   isProtected   isInRow   x   y");
 		for (Word word : words) {
 			System.out.println(word.getContent() + "   " + word.isProtected()
-					+ "   " + word.isInRow());
+					+ "   " + word.isInRow() + "   " + word.getX() + "   "
+					+ word.getY());
 		}
 		System.out.println("Rows");
 		for (Row row : rows) {
@@ -176,7 +177,8 @@ public class ApplicationPanel extends JPanel {
 			List<Word> wordList = row.getWordList();
 			for (Word word : wordList) {
 				System.out.println(word.getContent() + "   "
-						+ word.isProtected() + "   " + word.isInRow());
+						+ word.isProtected() + "   " + word.isInRow() + "   "
+						+ word.getX() + "   " + word.getY());
 			}
 		}
 	}
