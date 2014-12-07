@@ -15,7 +15,7 @@ import view.Application;
 import view.ApplicationPanel;
 
 /**
- * MoveWordController Class
+ * MoveRowController Class
  * 
  * @author diwang
  *
@@ -181,7 +181,8 @@ public class MoveRowController extends MouseAdapter {
 		MoveRow move = new MoveRow(selectedRow, originalx, originaly,
 				selectedRow.getX(), selectedRow.getY(), originalBoard, model);
 		if (move.execute()) {
-			model.recordMove(move);
+			model.recordUndoMove(move);
+			model.clearRedoMoves();
 		}
 
 		// no longer selected

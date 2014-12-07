@@ -132,7 +132,7 @@ public class ApplicationPanel extends JPanel {
 		if (g == null) {
 			return;
 		}
-		 this.showBoardState();
+		// this.showBoardState();
 		if (word.isProtected()) {
 			g.setColor(Color.WHITE);
 			if (word.isInRow()) {

@@ -37,7 +37,6 @@ public class MoveRow extends Move {
 	@Override
 	public boolean execute() {
 		row.setLocation(newx, newy);
-		model.setBoard(newBoard);
 		return true;
 	}
 
@@ -46,6 +45,13 @@ public class MoveRow extends Move {
 		row.setLocation(oldx, oldy);
 		model.setBoard(oldBoard);
 		return true;
+	}
+
+	@Override
+	public boolean redo() {
+		row.setLocation(newx, newy);
+		model.setBoard(newBoard);
+		return false;
 	}
 
 }

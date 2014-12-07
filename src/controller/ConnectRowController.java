@@ -14,17 +14,22 @@ import util.CloneUtils;
 import view.Application;
 import view.ApplicationPanel;
 
-public class DisconnectWordController extends MouseAdapter {
+/**
+ * ConnectRowController Class
+ * 
+ * @author diwang
+ *
+ */
+public class ConnectRowController extends MouseAdapter {
 
 	/** Needed for controller behavior. */
 	Model model;
 	Application app;
 	ApplicationPanel panel;
 
-	/** Original x,y where word was before move. */
+	/** Original x,y where row was before move. */
 	int originalx;
 	int originaly;
-	/** Original isInRow whether word was before move. */
 	Board originalBoard;
 
 	/** Anchor point where first grabbed and delta from that location. */
@@ -36,7 +41,7 @@ public class DisconnectWordController extends MouseAdapter {
 	int buttonType;
 
 	/** Constructor holds onto key manager objects. */
-	public DisconnectWordController(Model model, Application app) {
+	public ConnectRowController(Model model, Application app) {
 		this.model = model;
 		this.app = app;
 		this.panel = app.getWordPanel();
@@ -86,22 +91,9 @@ public class DisconnectWordController extends MouseAdapter {
 		}
 
 		boolean ok = true;
-		// judge whether out of bound
-		if (Board.isOutOfProtectedArea(word)) {
+
+		if (!word.isInRow()) {
 			ok = false;
-		} else {
-			if (!word.isInRow()) {
-				ok = false;
-			} else {
-				ArrayList<Row> rows = model.getBoard().rows;
-				Row row = model.getBoard().getRowFromRowListByWord(rows, word);
-				if (!(row.getWordList().get(0).equals(word) || row
-						.getWordList().get(row.getWordList().size() - 1)
-						.equals(word))) {
-					// if word is not edge one
-					ok = false;
-				}
-			}
 		}
 		if (!ok) {
 			Toolkit.getDefaultToolkit().beep();
@@ -109,19 +101,12 @@ public class DisconnectWordController extends MouseAdapter {
 		} else {
 			// no longer in the board since we are moving it around...
 			originalBoard = CloneUtils.clone(model.getBoard());
-			model.getBoard().removeWord(word);
-			model.setSelectedWord(word);
-			originalx = word.getX();
-			originaly = word.getY();
-
-			word.setInRow(false);
+			// move the row where the word is
 			ArrayList<Row> rows = model.getBoard().rows;
 			Row row = model.getBoard().getRowFromRowListByWord(rows, word);
-			row.getWordList().remove(word);
-			if (row.getWordList().size() == 1) {
-				row.getWordList().get(0).setInRow(false);
-				model.getBoard().removeRow(row);
-			}
+			model.setSelectedRow(row);
+			originalx = row.getX();
+			originaly = row.getY();
 
 			// set anchor for smooth moving
 			deltaX = anchor.x - originalx;
@@ -140,66 +125,67 @@ public class DisconnectWordController extends MouseAdapter {
 		if (buttonType == MouseEvent.BUTTON3) {
 			return false;
 		}
-		Word selected = model.getSelectedWord();
-
-		if (selected == null) {
+		Row selectedRow = model.getSelectedRow();
+		if (selectedRow == null) {
 			return false;
 		}
 
-		panel.paintBackground(selected);
-		int oldx = selected.getX();
-		int oldy = selected.getY();
-
-		selected.setLocation(x - deltaX, y - deltaY);
+		for (Word word : selectedRow.getWordList()) {
+			panel.paintBackground(word);
+		}
+		int oldx = selectedRow.getX();
+		int oldy = selectedRow.getY();
+		selectedRow.setLocation(x - deltaX, y - deltaY);
 
 		boolean ok = true;
-		// judge whether out of bound
-		// just connect protected words
-		if (Board.isOutOfProtectedArea(selected)) {
-			ok = false;
-		} else {
-			for (Word word : model.getBoard().words) {
-				// judge whether intersect
-				if (word.intersects(selected)) {
-					ok = false;
-					break;
+		ArrayList<Row> rows = model.getBoard().rows;
+		for (Word word : selectedRow.getWordList()) {
+			// judge whether out of bound
+			if (Board.isOutOfProtectedArea(word)) {
+				ok = false;
+			} else {
+				for (Word w : model.getBoard().words) {
+					Row row = model.getBoard().getRowFromRowListByWord(rows, w);
+					// judge whether intersect
+					if (row != selectedRow) {
+						// if w is not in the row where word is in
+						if (w.intersects(word)) {
+							ok = false;
+							break;
+						}
+					}
 				}
 			}
 		}
 
 		if (!ok) {
-			selected.setLocation(oldx, oldy);
+			selectedRow.setLocation(oldx, oldy);
 		} else {
-			panel.paintWord(selected);
+			panel.redraw();
 			panel.repaint();
 		}
-
 		return true;
 	}
 
 	/** Separate out this function for testing purposes. */
 	protected boolean release(int x, int y) {
-		Word selected = model.getSelectedWord();
-		if (selected == null) {
+		Row selectedRow = model.getSelectedRow();
+		if (selectedRow == null) {
 			return false;
 		}
-
 		// now released we can create Move
-		model.getBoard().addWord(selected);
-		DisconnectWord disconnect = new DisconnectWord(selected, originalx,
-				originaly, selected.getX(), selected.getY(), originalBoard,
-				model.getBoard(), model);
-		if (disconnect.execute()) {
-			model.recordUndoMove(disconnect);
+		MoveRow move = new MoveRow(selectedRow, originalx, originaly,
+				selectedRow.getX(), selectedRow.getY(), originalBoard, model);
+		if (move.execute()) {
+			model.recordUndoMove(move);
 			model.clearRedoMoves();
 		}
 
 		// no longer selected
-		model.setSelectedWord(null);
+		model.setSelectedRow(null);
 
 		panel.redraw();
 		panel.repaint();
 		return true;
 	}
-
 }

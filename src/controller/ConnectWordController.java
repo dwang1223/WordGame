@@ -31,7 +31,6 @@ public class ConnectWordController extends MouseAdapter {
 	int originalx;
 	int originaly;
 	/** Original isInRow whether word was before move. */
-	boolean originalIsInRow;
 	Board originalBoard;
 
 	/** Anchor point where first grabbed and delta from that location. */
@@ -111,7 +110,6 @@ public class ConnectWordController extends MouseAdapter {
 			model.setSelectedWord(word);
 			originalx = word.getX();
 			originaly = word.getY();
-			originalIsInRow = word.isInRow();
 
 			// set anchor for smooth moving
 			deltaX = anchor.x - originalx;
@@ -192,10 +190,8 @@ public class ConnectWordController extends MouseAdapter {
 						if (distanceR < 20) {// In the right connectable area
 							selected.setLocation(word.getX() + word.getWidth(),
 									word.getY());
-							selected.setInRow(true);
 							if (!word.isInRow()) {
 								// If word is not in row, create a new row
-								word.setInRow(true);
 								Row row = new Row(word, selected);
 								model.getBoard().addRow(row);
 							} else {
@@ -210,10 +206,8 @@ public class ConnectWordController extends MouseAdapter {
 							selected.setLocation(
 									word.getX() - selected.getWidth(),
 									word.getY());
-							selected.setInRow(true);
 							if (!word.isInRow()) {
 								// If word is not in row, create a new row
-								word.setInRow(true);
 								Row row = new Row(selected, word);
 								model.getBoard().addRow(row);
 							} else {
@@ -227,16 +221,18 @@ public class ConnectWordController extends MouseAdapter {
 						}
 					}
 				}
+				System.out.println(word.getContent());
 			}
 		}
 
 		// now released we can create Move
 		model.getBoard().addWord(selected);
 		ConnectWord connect = new ConnectWord(selected, originalx, originaly,
-				selected.getX(), selected.getY(), originalIsInRow,
-				selected.isInRow(), originalBoard, model);
+				selected.getX(), selected.getY(), originalBoard,
+				model.getBoard(), model);
 		if (connect.execute()) {
-			model.recordMove(connect);
+			model.recordUndoMove(connect);
+			model.clearRedoMoves();
 		}
 
 		// no longer selected

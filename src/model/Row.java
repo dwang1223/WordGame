@@ -15,17 +15,19 @@ public class Row implements Serializable {
 	 * Unique ID for serialized Row objects.
 	 */
 	private static final long serialVersionUID = 2174232094987029918L;
-	private List<Word> wordList = new ArrayList<Word>();
-	private boolean isSelected = false;
+	private ArrayList<Word> wordList = new ArrayList<Word>();
+	private boolean isSelected;
 
 	public Row(Word word1, Word word2) {
+		word1.setInRow(true);
+		word2.setInRow(true);
 		this.wordList.add(word1);
 		this.wordList.add(word2);
 	}
 
 	public Row(Row row1, Row row2) {
-		List<Word> wordList1 = row1.wordList;
-		List<Word> wordList2 = row2.wordList;
+		ArrayList<Word> wordList1 = row1.wordList;
+		ArrayList<Word> wordList2 = row2.wordList;
 		wordList1.addAll(wordList2);
 		this.wordList = wordList1;
 	}
@@ -62,6 +64,7 @@ public class Row implements Serializable {
 
 	public boolean addWord(Word word, boolean isRight) {
 		if (word != null) {
+			word.setInRow(true);
 			if (isRight) {
 				this.wordList.add(word);
 			} else {

@@ -16,14 +16,15 @@ public class Word implements java.io.Serializable {
 	private Rectangle rect;
 	private String content;
 	private boolean isProtected;
-	private boolean isInRow = false;
-	private boolean isInPoem = false;
+	private boolean isInRow;
+	private boolean isInPoem;
 
-	public Word(int x, int y, String content, boolean isProtected, boolean isInRow) {
+	public Word(int x, int y, String content, boolean isProtected, boolean isInRow, boolean isInPoem) {
 		this.rect = new Rectangle(x, y, content.length() * 10, 25);
 		this.content = content;
 		this.isProtected = isProtected;
 		this.isInRow = isInRow;
+		this.isInPoem = isInPoem;
 	}
 
 	public boolean isProtected() {

@@ -4,8 +4,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.text.Position;
-
 /**
  * Poem Class
  * 
@@ -13,6 +11,7 @@ import javax.swing.text.Position;
  *
  */
 public class Poem implements Serializable {
+	private static final long serialVersionUID = -2798021631905491702L;
 	private List<Row> rowList = new ArrayList<Row>();
 	private boolean isSelected = false;
 

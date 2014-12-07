@@ -14,9 +14,10 @@ import model.Model;
 import controller.AddWordController;
 import controller.ConnectWordController;
 import controller.DisconnectWordController;
-import controller.MoveRowController;
+import controller.ConnectRowController;
 import controller.MoveWordController;
 import controller.PublishController;
+import controller.RedoController;
 import controller.RemoveWordController;
 import controller.UndoController;
 
@@ -42,6 +43,8 @@ public class Application extends JFrame {
 	JButton moveRowButton;
 	JButton connectButton;
 	JButton disconnectButton;
+	JButton connectRowButton;
+	JButton disconnectRowButton;
 	JButton publishButton;
 	JButton undoButton;
 	JButton redoButton;
@@ -83,6 +86,12 @@ public class Application extends JFrame {
 
 		disconnectButton = new JButton("Disconnect");
 		topMenuPanel.add(disconnectButton);
+		
+		connectRowButton = new JButton("Connect Row");
+		topMenuPanel.add(connectRowButton);
+
+		disconnectRowButton = new JButton("Disconnect Row");
+		topMenuPanel.add(disconnectRowButton);
 
 		pane.add(topMenuPanel); // at top
 
@@ -128,6 +137,14 @@ public class Application extends JFrame {
 			}
 		});
 
+		redoButton.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				new RedoController(model, panel).process();
+			}
+		});
+		
 		addButton.addActionListener(new ActionListener() {
 
 			@Override
@@ -160,7 +177,7 @@ public class Application extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				// register controller
-				new MoveRowController(model, Application.this).register();
+				new ConnectRowController(model, Application.this).register();
 			}
 		});
 
@@ -180,6 +197,25 @@ public class Application extends JFrame {
 				// register controller
 				new DisconnectWordController(model, Application.this)
 						.register();
+			}
+		});
+		
+		connectRowButton.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				// register controller
+				new ConnectRowController(model, Application.this).register();
+			}
+		});
+		
+		disconnectRowButton.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				// register controller
+//				new DisconnectRowController(model, Application.this)
+//						.register();
 			}
 		});
 	}

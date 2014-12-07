@@ -13,7 +13,7 @@ public class UndoController {
 	}
 
 	public boolean process() {
-		Move m = model.removeLastMove();
+		Move m = model.removeLastUndoMove();
 		if (m == null) {
 			return false;
 		}

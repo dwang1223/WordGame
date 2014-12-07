@@ -66,7 +66,7 @@ public class Board implements Serializable {
 		words = new ArrayList<Word>();
 		for (Word word : m.stored) {
 			words.add(new Word(word.getX(), word.getY(), word.getContent(),
-					word.isProtected(), word.isInRow()));
+					word.isProtected(), word.isInRow(), word.isInPoem()));
 		}
 		// state changed
 		notifyListeners();

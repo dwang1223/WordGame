@@ -187,9 +187,10 @@ public class MoveWordController extends MouseAdapter {
 		model.getBoard().addWord(selected);
 		MoveWord move = new MoveWord(selected, originalx, originaly,
 				selected.getX(), selected.getY(), originalIsProtected,
-				selected.isProtected(), originalBoard, model);
+				selected.isProtected(), originalBoard, model.getBoard(), model);
 		if (move.execute()) {
-			model.recordMove(move);
+			model.recordUndoMove(move);
+			model.clearRedoMoves();
 		}
 
 		// no longer selected

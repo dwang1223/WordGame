@@ -29,7 +29,7 @@ public class BoardMemento implements Serializable {
 	public BoardMemento(ArrayList<Word> words) {
 		for (Word word : words) {
 			stored.add(new Word(word.getX(), word.getY(), word.getContent(),
-					word.isProtected(), word.isInRow()));
+					word.isProtected(), word.isInRow(), word.isInPoem()));
 		}
 	}
 }

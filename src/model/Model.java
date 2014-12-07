@@ -13,7 +13,8 @@ import controller.Move;
 public class Model {
 
 	Board board;
-	Stack<Move> moves = new Stack<Move>();
+	Stack<Move> undoMoves = new Stack<Move>();
+	Stack<Move> redoMoves = new Stack<Move>();
 
 	/** Currently selected shape (or null if none). */
 	Word selectedWord;
@@ -35,20 +36,48 @@ public class Model {
 		return board;
 	}
 
-	public void recordMove(Move move) {
-		moves.add(move);
-		// System.out.println("recordMove_moves size: " + moves.size());
+	public void recordUndoMove(Move move) {
+		undoMoves.add(move);
+		// System.out
+		// .println("recordUndoMove_undoMoves size: " + undoMoves.size());
 	}
 
-	public Move removeLastMove() {
-		if (moves.isEmpty()) {
+	public Move removeLastUndoMove() {
+		if (undoMoves.isEmpty()) {
 			return null;
 		}
-		return moves.pop();
+		Move undoMove = undoMoves.pop();
+		redoMoves.add(undoMove);
+		// System.out
+		// .println("recordUndoMove_undoMoves size: " + undoMoves.size());
+		// System.out
+		// .println("recordRedoMove_redoMoves size: " + redoMoves.size());
+		return undoMove;
 	}
 
-	public int getMovesSize() {
-		return moves.size();
+	public Move removeLastRedoMove() {
+		if (redoMoves.isEmpty()) {
+			return null;
+		}
+		Move redoMove = redoMoves.pop();
+		undoMoves.add(redoMove);
+		// System.out
+		// .println("recordUndoMove_undoMoves size: " + undoMoves.size());
+		// System.out
+		// .println("recordRedoMove_redoMoves size: " + redoMoves.size());
+		return redoMove;
+	}
+
+	public void clearRedoMoves() {
+		redoMoves.clear();
+	}
+
+	public int getUndoMovesSize() {
+		return undoMoves.size();
+	}
+
+	public int getRedoMovesSize() {
+		return redoMoves.size();
 	}
 
 	public void setSelectedWord(Word word) {
