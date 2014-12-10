@@ -21,7 +21,7 @@ import view.ApplicationPanel;
  * @author diwang
  *
  */
-public class ConnectRowController extends MouseAdapter {
+public class DisconnectRowController extends MouseAdapter {
 
 	/** Needed for controller behavior. */
 	Model model;
@@ -42,7 +42,7 @@ public class ConnectRowController extends MouseAdapter {
 	int buttonType;
 
 	/** Constructor holds onto key manager objects. */
-	public ConnectRowController(Model model, Application app) {
+	public DisconnectRowController(Model model, Application app) {
 		this.model = model;
 		this.app = app;
 		this.panel = app.getWordPanel();
@@ -92,26 +92,36 @@ public class ConnectRowController extends MouseAdapter {
 		}
 
 		boolean ok = true;
-
-		if (!word.isInRow()) {
+		ArrayList<Row> rows = model.getBoard().rows;
+		ArrayList<Poem> poems = model.getBoard().poems;
+		Row row = model.getBoard().getRowFromRowListByWord(rows, word);
+		Poem poem = model.getBoard().getPoemFromPoemListByRow(poems, row);
+		if (!word.isInPoem()) {
 			ok = false;
 		} else {
-			if (word.isInPoem()) {
+			if (!((poem.getRowList().get(0).getWordList().get(0).equals(row
+					.getWordList().get(0))) || (poem.getRowList()
+					.get(poem.getRowList().size() - 1).getWordList().get(0)
+					.equals(row.getWordList().get(0))))) {
 				ok = false;
 			}
 		}
+
 		if (!ok) {
 			Toolkit.getDefaultToolkit().beep();
 			return false;
 		} else {
 			// no longer in the board since we are moving it around...
 			originalBoard = CloneUtils.clone(model.getBoard());
-			// move the row where the word is
-			ArrayList<Row> rows = model.getBoard().rows;
-			Row row = model.getBoard().getRowFromRowListByWord(rows, word);
+
 			model.setSelectedRow(row);
 			originalx = row.getX();
 			originaly = row.getY();
+
+			if (!poem.removeRow(row)) {
+				// if the size of poem is 1
+				model.getBoard().removePoem(poem);
+			}
 
 			// set anchor for smooth moving
 			deltaX = anchor.x - originalx;
@@ -179,61 +189,12 @@ public class ConnectRowController extends MouseAdapter {
 			return false;
 		}
 
-		int xofSelectedRow = selectedRow.getX();
-		int yofSelectedRow = selectedRow.getY();
-		// connect row
-		ArrayList<Row> rows = model.getBoard().rows;
-		ArrayList<Poem> poems = model.getBoard().poems;
-		for (Row row : rows) {
-			int xofRow = row.getX();
-			int yofRow = row.getY();
-			int widthofRow = row.getWidth();
-			int heightofRow = row.getHeight();
-			int distanceToTop = yofRow
-					- (yofSelectedRow + selectedRow.getHeight());
-			int distanceToBottom = yofSelectedRow - (yofRow + heightofRow);
-			if (distanceToTop > -5 && distanceToTop < 20) {
-				// if selectedRow is at the top of row
-				if ((xofRow - selectedRow.getWidth()) < xofSelectedRow
-						&& xofSelectedRow < (xofRow + widthofRow)) {
-					selectedRow.setLocation(xofSelectedRow, yofRow
-							- selectedRow.getHeight());
-					if (!row.isInPoem()) {
-						// If row is not in poem, create a new poem
-						Poem poem = new Poem(selectedRow, row);
-						model.getBoard().addPoem(poem);
-					} else {
-						// If row is in poem, add selectedRow to the poem
-						Poem poem = model.getBoard().getPoemFromPoemListByRow(
-								poems, row);
-						poem.addRow(selectedRow, false);
-					}
-				}
-			} else if (distanceToBottom > -5 && distanceToBottom < 20) {
-				// if selectedRow is at the bottom of row
-				if ((xofRow - selectedRow.getWidth()) < xofSelectedRow
-						&& xofSelectedRow < (xofRow + widthofRow)) {
-					selectedRow.setLocation(xofSelectedRow,
-							yofRow + row.getHeight());
-					if (!row.isInPoem()) {
-						// If row is not in poem, create a new poem
-						Poem poem = new Poem(selectedRow, row);
-						model.getBoard().addPoem(poem);
-					} else {
-						// If row is in poem, add selectedRow to the poem
-						Poem poem = model.getBoard().getPoemFromPoemListByRow(
-								poems, row);
-						poem.addRow(selectedRow, true);
-					}
-				}
-			}
-		}
-
 		// now released we can create Move
-		ConnectRow connectRow = new ConnectRow(selectedRow, originalx, originaly,
-				selectedRow.getX(), selectedRow.getY(), originalBoard, model);
-		if (connectRow.execute()) {
-			model.recordUndoMove(connectRow);
+		DisconnectRow disconnectRow = new DisconnectRow(selectedRow, originalx,
+				originaly, selectedRow.getX(), selectedRow.getY(),
+				originalBoard, model);
+		if (disconnectRow.execute()) {
+			model.recordUndoMove(disconnectRow);
 			model.clearRedoMoves();
 		}
 

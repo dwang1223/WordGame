@@ -12,9 +12,11 @@ import javax.swing.JPanel;
 import model.Board;
 import model.Model;
 import controller.AddWordController;
-import controller.ConnectWordController;
-import controller.DisconnectWordController;
 import controller.ConnectRowController;
+import controller.ConnectWordController;
+import controller.DisconnectRowController;
+import controller.DisconnectWordController;
+import controller.MovePoemController;
 import controller.MoveWordController;
 import controller.PublishController;
 import controller.RedoController;
@@ -45,6 +47,7 @@ public class Application extends JFrame {
 	JButton disconnectButton;
 	JButton connectRowButton;
 	JButton disconnectRowButton;
+	JButton movePoemButton;
 	JButton publishButton;
 	JButton undoButton;
 	JButton redoButton;
@@ -86,7 +89,7 @@ public class Application extends JFrame {
 
 		disconnectButton = new JButton("Disconnect");
 		topMenuPanel.add(disconnectButton);
-		
+
 		connectRowButton = new JButton("Connect Row");
 		topMenuPanel.add(connectRowButton);
 
@@ -107,6 +110,9 @@ public class Application extends JFrame {
 				+ Board.heightOfBoard, Board.widthOfFrame,
 				Board.heightOfBottomMenu);
 		bottomMenuPanel.setBackground(Color.RED);
+
+		movePoemButton = new JButton("Move Poem");
+		bottomMenuPanel.add(movePoemButton);
 
 		undoButton = new JButton("Undo");
 		bottomMenuPanel.add(undoButton);
@@ -144,7 +150,7 @@ public class Application extends JFrame {
 				new RedoController(model, panel).process();
 			}
 		});
-		
+
 		addButton.addActionListener(new ActionListener() {
 
 			@Override
@@ -199,7 +205,7 @@ public class Application extends JFrame {
 						.register();
 			}
 		});
-		
+
 		connectRowButton.addActionListener(new ActionListener() {
 
 			@Override
@@ -208,14 +214,22 @@ public class Application extends JFrame {
 				new ConnectRowController(model, Application.this).register();
 			}
 		});
-		
+
 		disconnectRowButton.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				// register controller
-//				new DisconnectRowController(model, Application.this)
-//						.register();
+				new DisconnectRowController(model, Application.this).register();
+			}
+		});
+
+		movePoemButton.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				new MovePoemController(model, Application.this).register();
 			}
 		});
 	}

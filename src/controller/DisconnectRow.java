@@ -11,7 +11,7 @@ import util.CloneUtils;
  * @author diwang
  *
  */
-public class MoveRow extends Move {
+public class DisconnectRow extends Move {
 
 	final Row row;
 	final int newx;
@@ -22,7 +22,7 @@ public class MoveRow extends Move {
 	final Board oldBoard;
 	Model model;
 
-	public MoveRow(Row row, int oldx, int oldy, int newx, int newy,
+	public DisconnectRow(Row row, int oldx, int oldy, int newx, int newy,
 			Board oldBoard, Model model) {
 		this.row = row;
 		this.oldx = oldx;

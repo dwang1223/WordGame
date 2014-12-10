@@ -50,6 +50,22 @@ public class Row implements Serializable {
 		return wordList.get(0).getY();
 	}
 
+	public int getWidth() {
+		int width = 0;
+		for (Word word : wordList) {
+			width = width + word.getWidth();
+		}
+		return width;
+	}
+
+	public int getHeight() {
+		return wordList.get(0).getHeight();
+	}
+
+	public boolean isInPoem() {
+		return wordList.get(0).isInPoem();
+	}
+
 	public List<Word> getWordList() {
 		return wordList;
 	}
@@ -85,11 +101,13 @@ public class Row implements Serializable {
 		}
 	}
 
-	public boolean removeWord(boolean isRight) {
-		if (isRight) {
-			this.wordList.remove(this.wordList.size() - 1);
-		} else {
-			this.wordList.remove(0);
+	public boolean removeWord(Word word) {
+		word.setInRow(false);
+		wordList.remove(word);
+		if (wordList.size() == 1) {
+			// if the size of row is 1
+			wordList.get(0).setInRow(false);
+			return false;
 		}
 		return true;
 	}

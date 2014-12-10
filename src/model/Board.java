@@ -32,12 +32,29 @@ public class Board implements Serializable {
 	public ArrayList<Word> words = new ArrayList<Word>();
 	/** Rows being maintained. */
 	public ArrayList<Row> rows = new ArrayList<Row>();
+	/** Poems being maintained. */
+	public ArrayList<Poem> poems = new ArrayList<Poem>();
 
-	public Row getRowFromRowListByWord(List<Row> rows, Word wordToConnect) {
+	public Row getRowFromRowListByWord(ArrayList<Row> rows, Word wordToConnect) {
 		for (Row row : rows) {
 			for (Word word : row.getWordList()) {
 				if (word.equals(wordToConnect)) {
 					return row;
+				}
+			}
+		}
+		return null;
+	}
+
+	public Poem getPoemFromPoemListByRow(ArrayList<Poem> poems, Row rowToConnect) {
+		Word wordToConnect = rowToConnect.getWordList().get(0);
+		for (Poem poem : poems) {
+			ArrayList<Row> rows = poem.getRowList();
+			for (Row row : rows) {
+				for (Word word : row.getWordList()) {
+					if (word.equals(wordToConnect)) {
+						return poem;
+					}
 				}
 			}
 		}
@@ -100,6 +117,20 @@ public class Board implements Serializable {
 	/** Remove row from board. */
 	public void removeRow(Row row) {
 		rows.remove(row);
+		// state changed
+		notifyListeners();
+	}
+
+	/** Add poem to board. */
+	public void addPoem(Poem poem) {
+		poems.add(poem);
+		// state changed
+		notifyListeners();
+	}
+
+	/** Remove poem from board. */
+	public void removePoem(Poem poem) {
+		poems.remove(poem);
 		// state changed
 		notifyListeners();
 	}

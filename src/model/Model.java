@@ -19,6 +19,7 @@ public class Model {
 	/** Currently selected shape (or null if none). */
 	Word selectedWord;
 	Row selectedRow;
+	Poem selectedPoem;
 
 	public Model(Board b) {
 		board = b;
@@ -68,6 +69,10 @@ public class Model {
 		return redoMove;
 	}
 
+	public void clearUndoMoves() {
+		undoMoves.clear();
+	}
+
 	public void clearRedoMoves() {
 		redoMoves.clear();
 	}
@@ -94,6 +99,14 @@ public class Model {
 
 	public void setSelectedRow(Row selectedRow) {
 		this.selectedRow = selectedRow;
+	}
+
+	public Poem getSelectedPoem() {
+		return selectedPoem;
+	}
+
+	public void setSelectedPoem(Poem selectedPoem) {
+		this.selectedPoem = selectedPoem;
 	}
 
 }

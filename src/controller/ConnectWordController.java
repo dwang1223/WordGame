@@ -172,7 +172,7 @@ public class ConnectWordController extends MouseAdapter {
 			return false;
 		}
 
-		if (!selected.isInRow()) {// if selected is not in row
+//		if (!selected.isInRow()) {// if selected is not in row
 			ArrayList<Word> words = model.getBoard().words;
 			ArrayList<Row> rows = model.getBoard().rows;
 			// connect words which are close to each other
@@ -223,7 +223,7 @@ public class ConnectWordController extends MouseAdapter {
 				}
 				System.out.println(word.getContent());
 			}
-		}
+//		}
 
 		// now released we can create Move
 		model.getBoard().addWord(selected);

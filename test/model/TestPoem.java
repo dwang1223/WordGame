@@ -47,8 +47,7 @@ public class TestPoem extends TestCase {
 		poem1.addRow(row2, false);
 		poem1.addRow(row2, true);
 		poem1.addRow(null, true);
-		poem1.removeRow(false);
-		poem1.removeRow(true);
+		poem1.removeRow(row1);
 	}
 
 	public void testShowPoem() {

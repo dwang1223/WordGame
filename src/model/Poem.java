@@ -12,19 +12,37 @@ import java.util.List;
  */
 public class Poem implements Serializable {
 	private static final long serialVersionUID = -2798021631905491702L;
-	private List<Row> rowList = new ArrayList<Row>();
+	private ArrayList<Row> rowList = new ArrayList<Row>();
 	private boolean isSelected = false;
 
 	public Poem(Row row1, Row row2) {
+		for (Word word1 : row1.getWordList()) {
+			word1.setInPoem(true);
+		}
+		for (Word word2 : row2.getWordList()) {
+			word2.setInPoem(true);
+		}
 		this.rowList.add(row1);
 		this.rowList.add(row2);
 	}
 
 	public Poem(Poem poem1, Poem poem2) {
-		List<Row> rowList1 = poem1.rowList;
-		List<Row> rowList2 = poem2.rowList;
+		ArrayList<Row> rowList1 = poem1.rowList;
+		ArrayList<Row> rowList2 = poem2.rowList;
 		rowList1.addAll(rowList2);
 		this.rowList = rowList1;
+	}
+
+	public void setLocation(int x, int y) {
+		int xofWord = x;
+		int yofWord = y;
+		for (Row row : rowList) {
+			for (int i = 0; i < row.getWordList().size(); i++) {
+				Word w = row.getWordList().get(i);
+				w.setLocation(xofWord, yofWord);
+				xofWord = xofWord + w.getWidth();
+			}
+		}
 	}
 
 	public int getX() {
@@ -35,7 +53,7 @@ public class Poem implements Serializable {
 		return rowList.get(0).getY();
 	}
 
-	public List<Row> getRowList() {
+	public ArrayList<Row> getRowList() {
 		return rowList;
 	}
 
@@ -49,6 +67,9 @@ public class Poem implements Serializable {
 
 	public boolean addRow(Row row, boolean isDown) {
 		if (row != null) {
+			for (Word word : row.getWordList()) {
+				word.setInPoem(true);
+			}
 			if (isDown) {
 				this.rowList.add(row);
 			} else {
@@ -69,11 +90,18 @@ public class Poem implements Serializable {
 		}
 	}
 
-	public boolean removeRow(boolean isDown) {
-		if (isDown) {
-			this.rowList.remove(this.rowList.size() - 1);
-		} else {
-			this.rowList.remove(0);
+	public boolean removeRow(Row row) {
+		for (Word word : row.getWordList()) {
+			word.setInPoem(false);
+		}
+		rowList.remove(row);
+		if (rowList.size() == 1) {
+			// if the size of poem is 1
+			Row lastRow = rowList.get(0);
+			for (Word word : lastRow.getWordList()) {
+				word.setInPoem(false);
+			}
+			return false;
 		}
 		return true;
 	}

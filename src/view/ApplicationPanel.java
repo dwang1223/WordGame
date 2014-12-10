@@ -137,6 +137,9 @@ public class ApplicationPanel extends JPanel {
 			g.setColor(Color.WHITE);
 			if (word.isInRow()) {
 				g.setColor(Color.YELLOW);
+				if (word.isInPoem()) {
+					g.setColor(Color.GREEN);
+				}
 			}
 		} else {
 			g.setColor(Color.LIGHT_GRAY);

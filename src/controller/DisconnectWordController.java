@@ -114,12 +114,10 @@ public class DisconnectWordController extends MouseAdapter {
 			originalx = word.getX();
 			originaly = word.getY();
 
-			word.setInRow(false);
 			ArrayList<Row> rows = model.getBoard().rows;
 			Row row = model.getBoard().getRowFromRowListByWord(rows, word);
-			row.getWordList().remove(word);
-			if (row.getWordList().size() == 1) {
-				row.getWordList().get(0).setInRow(false);
+			if(!row.removeWord(word)){
+				// if the size of row is 1
 				model.getBoard().removeRow(row);
 			}
 

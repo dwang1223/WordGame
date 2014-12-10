@@ -19,7 +19,8 @@ public class Word implements java.io.Serializable {
 	private boolean isInRow;
 	private boolean isInPoem;
 
-	public Word(int x, int y, String content, boolean isProtected, boolean isInRow, boolean isInPoem) {
+	public Word(int x, int y, String content, boolean isProtected,
+			boolean isInRow, boolean isInPoem) {
 		this.rect = new Rectangle(x, y, content.length() * 10, 25);
 		this.content = content;
 		this.isProtected = isProtected;
@@ -41,6 +42,7 @@ public class Word implements java.io.Serializable {
 
 	public void setInRow(boolean isInRow) {
 		this.isInRow = isInRow;
+//		System.out.println(this + " inRow: " + isInRow);
 	}
 
 	public boolean isInPoem() {

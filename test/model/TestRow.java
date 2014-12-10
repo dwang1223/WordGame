@@ -52,8 +52,7 @@ public class TestRow extends TestCase {
 		row1.addWord(null, true);
 		row1.addWord(word3, false);
 		row1.addWord(word3, true);
-		row1.removeWord(false);
-		row1.removeWord(true);
+		row1.removeWord(word3);
 	}
 
 	public void testShowRow() {

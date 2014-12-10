@@ -17,15 +17,8 @@ public class RedoController {
 		if (m == null) {
 			return false;
 		}
-//		if (model.getRedoMovesSize() == (model.getRedoMovesSize()
-//				+ model.getUndoMovesSize())) {
-//			m = model.removeLastRedoMove();
-//			m.redo();
-//		}else if (model.getRedoMovesSize() == 0) {
-//			m.execute();
-//		} else {
-			m.redo();
-//		}
+
+		m.redo();
 
 		// force board to redraw
 		canvas.redraw();
