@@ -10,7 +10,7 @@ import java.util.List;
  * @author diwang
  *
  */
-public class Poem implements Serializable {
+public class Poem implements Serializable, Cloneable {
 	private static final long serialVersionUID = -2798021631905491702L;
 	private ArrayList<Row> rowList = new ArrayList<Row>();
 	private boolean isSelected = false;
@@ -34,14 +34,14 @@ public class Poem implements Serializable {
 	}
 
 	public void setLocation(int x, int y) {
-		int xofWord = x;
-		int yofWord = y;
-		for (Row row : rowList) {
-			for (int i = 0; i < row.getWordList().size(); i++) {
-				Word w = row.getWordList().get(i);
-				w.setLocation(xofWord, yofWord);
-				xofWord = xofWord + w.getWidth();
-			}
+		int xofRow = x;
+		int yofRow = y;
+		int heightofRow = rowList.get(0).getHeight();
+		int diffofX = xofRow - rowList.get(0).getX();
+		for (int i = 0; i < rowList.size(); i++) {
+			Row row = rowList.get(i);
+			row.setLocation(row.getX() + diffofX, yofRow);
+			yofRow = yofRow + heightofRow;
 		}
 	}
 

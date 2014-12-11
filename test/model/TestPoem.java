@@ -50,12 +50,39 @@ public class TestPoem extends TestCase {
 		poem1.removeRow(row1);
 	}
 
+	public void testLocation() {
+		Word word1 = new Word(10, 10, "di", false, false, false);
+		Word word2 = new Word(30, 10, "wang", false, false, false);
+		Row row1 = new Row(word1, word2);
+		Word word3 = new Word(20, 35, "di", false, false, false);
+		Word word4 = new Word(40, 35, "wang", false, false, false);
+		Row row2 = new Row(word3, word4);
+		Poem poem = new Poem(row1, row2);
+		poem.setLocation(110, 110);
+		for (Row row : poem.getRowList()) {
+			System.out.println("=======================");
+			for (Word word : row.getWordList()) {
+				System.out.println("wordX: " + word.getX() + "   wordY: "
+						+ word.getY());
+			}
+		}
+		// row1.setLocation(110, 110);
+		// for (Word word : row1.getWordList()) {
+		// System.out.println("wordX: " + word.getX() + "   wordY: "
+		// + word.getY());
+		// }
+		// System.out.println("word1X: " + word1.getX() + "   word1Y: "
+		// + word1.getY());
+		// System.out.println("word2X: " + word2.getX() + "   word2Y: "
+		// + word2.getY());
+	}
+
 	public void testShowPoem() {
 		Word word1 = new Word(10, 10, "di", false, false, false);
 		Word word2 = new Word(20, 20, "wang", false, false, false);
 		Row row1 = new Row(word1, word2);
 		Row row2 = new Row(word1, word2);
 		Poem poem1 = new Poem(row1, row2);
-		poem1.showPoem();
+		// poem1.showPoem();
 	}
 }

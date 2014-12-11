@@ -93,7 +93,7 @@ public class MovePoemController extends MouseAdapter {
 
 		boolean ok = true;
 
-		if (!word.isInRow()) {
+		if (!word.isInPoem()) {
 			ok = false;
 		}
 		if (!ok) {
@@ -129,61 +129,71 @@ public class MovePoemController extends MouseAdapter {
 		if (buttonType == MouseEvent.BUTTON3) {
 			return false;
 		}
-		
+
 		Poem selectedPoem = model.getSelectedPoem();
 		if (selectedPoem == null) {
 			return false;
 		}
 
-		for(Row row: selectedPoem.getRowList()){
+		for (Row row : selectedPoem.getRowList()) {
 			for (Word word : row.getWordList()) {
 				panel.paintBackground(word);
 			}
 		}
-		
+
 		int oldx = selectedPoem.getX();
 		int oldy = selectedPoem.getY();
 		selectedPoem.setLocation(x - deltaX, y - deltaY);
 
 		boolean ok = true;
+		ArrayList<Poem> poems = model.getBoard().poems;
 		ArrayList<Row> rows = model.getBoard().rows;
-//		for (Word word : selectedRow.getWordList()) {
-//			// judge whether out of bound
-//			if (Board.isOutOfProtectedArea(word)) {
-//				ok = false;
-//			} else {
-//				for (Word w : model.getBoard().words) {
-//					Row row = model.getBoard().getRowFromRowListByWord(rows, w);
-//					// judge whether intersect
-//					if (row != selectedRow) {
-//						// if w is not in the row where word is in
-//						if (w.intersects(word)) {
-//							ok = false;
-//							break;
-//						}
-//					}
-//				}
-//			}
-//		}
 
-//		if (!ok) {
-//			selectedRow.setLocation(oldx, oldy);
-//		} else {
+		for (Row row : selectedPoem.getRowList()) {
+			for (Word word : row.getWordList()) {
+				// judge whether out of bound
+				if (Board.isOutOfProtectedArea(word)) {
+					ok = false;
+				} else {
+					for (Word w : model.getBoard().words) {
+						Row r = model.getBoard().getRowFromRowListByWord(rows,
+								w);
+						Poem poem = null;
+						if (r != null) {
+							poem = model.getBoard().getPoemFromPoemListByRow(
+									poems, r);
+						}
+						// judge whether intersect
+						if (poem != selectedPoem) {
+							// if w is not in the poem where word is in
+							if (w.intersects(word)) {
+								ok = false;
+								break;
+							}
+						}
+					}
+				}
+			}
+		}
+
+		if (!ok) {
+			selectedPoem.setLocation(oldx, oldy);
+		} else {
 			panel.redraw();
 			panel.repaint();
-//		}
+		}
 		return true;
 	}
 
 	/** Separate out this function for testing purposes. */
 	protected boolean release(int x, int y) {
-		Row selectedRow = model.getSelectedRow();
-		if (selectedRow == null) {
+		Poem selectedPoem = model.getSelectedPoem();
+		if (selectedPoem == null) {
 			return false;
 		}
 		// now released we can create Move
-		MoveRow move = new MoveRow(selectedRow, originalx, originaly,
-				selectedRow.getX(), selectedRow.getY(), originalBoard, model);
+		MovePoem move = new MovePoem(selectedPoem, originalx, originaly,
+				selectedPoem.getX(), selectedPoem.getY(), originalBoard, model);
 		if (move.execute()) {
 			model.recordUndoMove(move);
 			model.clearRedoMoves();

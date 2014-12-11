@@ -2,7 +2,7 @@ package controller;
 
 import model.Board;
 import model.Model;
-import model.Row;
+import model.Poem;
 import util.CloneUtils;
 
 /**
@@ -13,7 +13,7 @@ import util.CloneUtils;
  */
 public class MovePoem extends Move {
 
-	final Row row;
+	final Poem poem;
 	final int newx;
 	final int newy;
 	final int oldx;
@@ -22,9 +22,9 @@ public class MovePoem extends Move {
 	final Board oldBoard;
 	Model model;
 
-	public MovePoem(Row row, int oldx, int oldy, int newx, int newy,
+	public MovePoem(Poem poem, int oldx, int oldy, int newx, int newy,
 			Board oldBoard, Model model) {
-		this.row = row;
+		this.poem = poem;
 		this.oldx = oldx;
 		this.oldy = oldy;
 		this.newx = newx;
@@ -36,20 +36,20 @@ public class MovePoem extends Move {
 
 	@Override
 	public boolean execute() {
-		row.setLocation(newx, newy);
+		poem.setLocation(newx, newy);
 		return true;
 	}
 
 	@Override
 	public boolean undo() {
-		row.setLocation(oldx, oldy);
+		poem.setLocation(oldx, oldy);
 		model.setBoard(oldBoard);
 		return true;
 	}
 
 	@Override
 	public boolean redo() {
-		row.setLocation(newx, newy);
+		poem.setLocation(newx, newy);
 		model.setBoard(newBoard);
 		return false;
 	}

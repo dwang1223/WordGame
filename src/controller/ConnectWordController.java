@@ -221,7 +221,7 @@ public class ConnectWordController extends MouseAdapter {
 						}
 					}
 				}
-				System.out.println(word.getContent());
+//				System.out.println(word.getContent());
 			}
 //		}
 

@@ -8,7 +8,7 @@ import java.awt.Rectangle;
  * @author diwang
  *
  */
-public class Word implements java.io.Serializable {
+public class Word implements java.io.Serializable, Cloneable {
 	/**
 	 * Unique ID for serialized Word objects.
 	 */
@@ -42,7 +42,7 @@ public class Word implements java.io.Serializable {
 
 	public void setInRow(boolean isInRow) {
 		this.isInRow = isInRow;
-//		System.out.println(this + " inRow: " + isInRow);
+		// System.out.println(this + " inRow: " + isInRow);
 	}
 
 	public boolean isInPoem() {

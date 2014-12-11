@@ -15,7 +15,7 @@ import controller.Listener;
  * @author diwang
  *
  */
-public class Board implements Serializable {
+public class Board implements Serializable, Cloneable {
 	private static final long serialVersionUID = 3875544904467596047L;
 	public final static int widthOfFrame = 1000;
 	public final static int heightOfFrame = 720;

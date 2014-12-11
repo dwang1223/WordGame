@@ -217,7 +217,7 @@ public class ConnectRowController extends MouseAdapter {
 							yofRow + row.getHeight());
 					if (!row.isInPoem()) {
 						// If row is not in poem, create a new poem
-						Poem poem = new Poem(selectedRow, row);
+						Poem poem = new Poem(row, selectedRow);
 						model.getBoard().addPoem(poem);
 					} else {
 						// If row is in poem, add selectedRow to the poem
@@ -230,8 +230,9 @@ public class ConnectRowController extends MouseAdapter {
 		}
 
 		// now released we can create Move
-		ConnectRow connectRow = new ConnectRow(selectedRow, originalx, originaly,
-				selectedRow.getX(), selectedRow.getY(), originalBoard, model);
+		ConnectRow connectRow = new ConnectRow(selectedRow, originalx,
+				originaly, selectedRow.getX(), selectedRow.getY(),
+				originalBoard, model);
 		if (connectRow.execute()) {
 			model.recordUndoMove(connectRow);
 			model.clearRedoMoves();
