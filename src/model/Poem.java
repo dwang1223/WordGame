@@ -36,12 +36,13 @@ public class Poem implements Serializable, Cloneable {
 	public void setLocation(int x, int y) {
 		int xofRow = x;
 		int yofRow = y;
-		int heightofRow = rowList.get(0).getHeight();
+		// int heightofRow = rowList.get(0).getHeight();
 		int diffofX = xofRow - rowList.get(0).getX();
+		int diffofY = yofRow - rowList.get(0).getY();
 		for (int i = 0; i < rowList.size(); i++) {
 			Row row = rowList.get(i);
-			row.setLocation(row.getX() + diffofX, yofRow);
-			yofRow = yofRow + heightofRow;
+			row.setLocation(row.getX() + diffofX, row.getY() + diffofY);
+			// yofRow = yofRow + heightofRow;
 		}
 	}
 

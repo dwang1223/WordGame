@@ -17,6 +17,7 @@ import controller.ConnectWordController;
 import controller.DisconnectRowController;
 import controller.DisconnectWordController;
 import controller.MovePoemController;
+import controller.MoveRowController;
 import controller.MoveWordController;
 import controller.PublishController;
 import controller.RedoController;
@@ -183,7 +184,7 @@ public class Application extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				// register controller
-				new ConnectRowController(model, Application.this).register();
+				new MoveRowController(model, Application.this).register();
 			}
 		});
 

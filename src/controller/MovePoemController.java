@@ -109,8 +109,8 @@ public class MovePoemController extends MouseAdapter {
 			Poem poem = model.getBoard().getPoemFromPoemListByRow(poems, row);
 			model.setSelectedPoem(poem);
 
-			originalx = row.getX();
-			originaly = row.getY();
+			originalx = poem.getX();
+			originaly = poem.getY();
 
 			// set anchor for smooth moving
 			deltaX = anchor.x - originalx;
