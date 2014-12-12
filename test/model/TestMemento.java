@@ -7,7 +7,7 @@ public class TestMemento extends TestCase {
 	public void testConstruction() {
 		Board b = new Board();
 
-		Word word = new Word(0, 0, "wang", false, false, false);
+		Word word = new Word(0, 0, "wang", "noun", false, false, false);
 		b.addWord(word);
 
 		// create memento and restore b2 to that state
@@ -22,7 +22,7 @@ public class TestMemento extends TestCase {
 	public void testRestoration() {
 		Board b = new Board();
 
-		Word s = new Word(0, 0, "di", false, false, false);
+		Word s = new Word(0, 0, "di", "noun", false, false, false);
 		b.addWord(s);
 		BoardMemento m = b.getState();
 		b.removeWord(s);

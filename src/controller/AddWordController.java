@@ -40,7 +40,8 @@ public class AddWordController extends MouseAdapter {
 	protected void process(int x, int y) {
 		// alternate to demonstrate swapping
 		Word word;
-		word = new Word(x, y, "Di Wang " + x, false, false, false);
+		word = new Word(x, y, "Di Wang " + x, "noun", false, false, false,
+				false);
 		// java.util.Random random = new java.util.Random();
 		// if (random.nextFloat() < 0.5) {
 		// word = new Word(x, y, "Di Wang");

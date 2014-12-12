@@ -39,6 +39,7 @@ public class Application extends JFrame {
 	JPanel topMenuPanel;
 	ApplicationPanel panel;
 	JPanel bottomMenuPanel;
+	WordTable wordTable;
 
 	JButton addButton;
 	JButton removeButton;
@@ -233,6 +234,14 @@ public class Application extends JFrame {
 				new MovePoemController(model, Application.this).register();
 			}
 		});
+
+		/**
+		 * Add word table into the frame
+		 */
+		// chen chen added
+		wordTable = new WordTable(model.getBoard(), panel);
+		wordTable.setBounds(700, 50, 300, 600);
+		pane.add(wordTable);
 	}
 
 	public ApplicationPanel getWordPanel() {

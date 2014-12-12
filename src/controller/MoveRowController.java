@@ -104,10 +104,6 @@ public class MoveRowController extends MouseAdapter {
 			// move the row where the word is
 			ArrayList<Row> rows = model.getBoard().rows;
 			Row row = model.getBoard().getRowFromRowListByWord(rows, word);
-//			for (Word w : row.getWordList()) {
-//				System.out.println(w.getContent() + " " + w.getX() + " "
-//						+ w.getY());
-//			}
 			model.setSelectedRow(row);
 			originalx = row.getX();
 			originaly = row.getY();

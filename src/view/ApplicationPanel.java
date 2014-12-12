@@ -142,7 +142,11 @@ public class ApplicationPanel extends JPanel {
 				}
 			}
 		} else {
-			g.setColor(Color.LIGHT_GRAY);
+			if(word.isSearched()){
+				g.setColor(Color.RED);
+			}else{
+				g.setColor(Color.LIGHT_GRAY);
+			}
 		}
 		g.fillRect(word.getX(), word.getY(), word.getWidth(), word.getHeight());
 		g.setColor(Color.BLACK);

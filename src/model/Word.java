@@ -8,24 +8,28 @@ import java.awt.Rectangle;
  * @author diwang
  *
  */
-public class Word implements java.io.Serializable, Cloneable {
+public class Word implements java.io.Serializable {
 	/**
 	 * Unique ID for serialized Word objects.
 	 */
 	private static final long serialVersionUID = 9018383050622954183L;
 	private Rectangle rect;
 	private String content;
+	private String type;
 	private boolean isProtected;
 	private boolean isInRow;
 	private boolean isInPoem;
+	private boolean isSearched;
 
-	public Word(int x, int y, String content, boolean isProtected,
-			boolean isInRow, boolean isInPoem) {
+	public Word(int x, int y, String content, String type, boolean isProtected,
+			boolean isInRow, boolean isInPoem, boolean isSearched) {
 		this.rect = new Rectangle(x, y, content.length() * 10, 25);
 		this.content = content;
+		this.type = type; // Chen Chen modified
 		this.isProtected = isProtected;
 		this.isInRow = isInRow;
 		this.isInPoem = isInPoem;
+		this.isSearched = isSearched;
 	}
 
 	public boolean isProtected() {
@@ -53,6 +57,14 @@ public class Word implements java.io.Serializable, Cloneable {
 		this.isInPoem = isInPoem;
 	}
 
+	public boolean isSearched() {
+		return isSearched;
+	}
+
+	public void setSearched(boolean isSearched) {
+		this.isSearched = isSearched;
+	}
+
 	public void setLocation(int x, int y) {
 		this.rect.x = x;
 		this.rect.y = y;
@@ -78,6 +90,10 @@ public class Word implements java.io.Serializable, Cloneable {
 		return content;
 	}
 
+	public String getType() {
+		return type;
+	}
+
 	public boolean intersect(int x, int y) {
 		return rect.contains(x, y);
 	}
@@ -94,7 +110,7 @@ public class Word implements java.io.Serializable, Cloneable {
 		if (o instanceof Word) {
 			Word other = (Word) o;
 			return other.rect.equals(this.rect)
-					&& other.content.equals(content);
+					&& other.content.equals(content) && other.type.equals(type);
 		}
 
 		return false; // can't compare different classes.

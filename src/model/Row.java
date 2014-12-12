@@ -10,7 +10,7 @@ import java.util.List;
  * @author diwang
  *
  */
-public class Row implements Serializable, Cloneable {
+public class Row implements Serializable {
 	/**
 	 * Unique ID for serialized Row objects.
 	 */

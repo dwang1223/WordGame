@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
-import java.util.List;
 
 import controller.Listener;
 
@@ -15,7 +14,7 @@ import controller.Listener;
  * @author diwang
  *
  */
-public class Board implements Serializable, Cloneable {
+public class Board implements Serializable {
 	private static final long serialVersionUID = 3875544904467596047L;
 	public final static int widthOfFrame = 1000;
 	public final static int heightOfFrame = 720;
@@ -83,10 +82,44 @@ public class Board implements Serializable, Cloneable {
 		words = new ArrayList<Word>();
 		for (Word word : m.stored) {
 			words.add(new Word(word.getX(), word.getY(), word.getContent(),
-					word.isProtected(), word.isInRow(), word.isInPoem()));
+					word.getType(), word.isProtected(), word.isInRow(), word
+							.isInPoem(), word.isSearched()));
 		}
+		// chen chen added
 		// state changed
 		notifyListeners();
+	}
+
+	/**
+	 * get the unprotected words
+	 * 
+	 * @return
+	 */
+	public ArrayList<Word> getUnprotectedWords() {
+		ArrayList<Word> unprotectedWords = new ArrayList<Word>();
+		for (Word word : words) {
+			if (word.isProtected() == false) {
+				unprotectedWords.add(word);
+			}
+		}
+		return unprotectedWords;
+	}
+
+	/**
+	 * set isSearched of word through keyWord
+	 * 
+	 * @param keyWord
+	 * @return
+	 */
+	public ArrayList<Word> setSearchedWords(String keyWord) {
+		ArrayList<Word> searchedWords = new ArrayList<Word>();
+		for (Word word : this.getUnprotectedWords()) {
+			word.setSearched(false);
+			if (keyWord.equals(word.getContent())) {
+				word.setSearched(true);
+			}
+		}
+		return searchedWords;
 	}
 
 	public BoardMemento getState() {
@@ -162,8 +195,8 @@ public class Board implements Serializable, Cloneable {
 	}
 
 	/** Sort words using given comparator. */
-	public void sortWords(Comparator<Word> comparator) {
-		Collections.sort(words, comparator);
+	public void sortUnprotectedWords(Comparator<Word> comparator) {
+		Collections.sort(this.getUnprotectedWords(), comparator);
 	}
 
 	/**
