@@ -13,8 +13,9 @@ import junit.framework.TestCase;
  */
 public class TestPoem extends TestCase {
 	public void testConstruction() {
-		Word word1 = new Word(10, 10, "di", "noun", false, false, false);
-		Word word2 = new Word(20, 20, "wang", "noun", false, false, false);
+		Word word1 = new Word(10, 10, "di", "noun", false, false, false, false);
+		Word word2 = new Word(20, 20, "wang", "noun", false, false, false,
+				false);
 		Row row1 = new Row(word1, word2);
 		Row row2 = new Row(word1, word2);
 		List<Row> rowList = new ArrayList<Row>();
@@ -29,8 +30,9 @@ public class TestPoem extends TestCase {
 	}
 
 	public void testSelected() {
-		Word word1 = new Word(10, 10, "di", "noun", false, false, false);
-		Word word2 = new Word(20, 20, "wang", "noun", false, false, false);
+		Word word1 = new Word(10, 10, "di", "noun", false, false, false, false);
+		Word word2 = new Word(20, 20, "wang", "noun", false, false, false,
+				false);
 		Row row1 = new Row(word1, word2);
 		Row row2 = new Row(word1, word2);
 		Poem poem1 = new Poem(row1, row2);
@@ -39,8 +41,9 @@ public class TestPoem extends TestCase {
 	}
 
 	public void testRowOperation() {
-		Word word1 = new Word(10, 10, "di", "noun", false, false, false);
-		Word word2 = new Word(20, 20, "wang", "noun", false, false, false);
+		Word word1 = new Word(10, 10, "di", "noun", false, false, false, false);
+		Word word2 = new Word(20, 20, "wang", "noun", false, false, false,
+				false);
 		Row row1 = new Row(word1, word2);
 		Row row2 = new Row(word1, word2);
 		Poem poem1 = new Poem(row1, row2);
@@ -51,11 +54,13 @@ public class TestPoem extends TestCase {
 	}
 
 	public void testLocation() {
-		Word word1 = new Word(10, 10, "di", "noun", false, false, false);
-		Word word2 = new Word(30, 10, "wang", "noun", false, false, false);
+		Word word1 = new Word(10, 10, "di", "noun", false, false, false, false);
+		Word word2 = new Word(30, 10, "wang", "noun", false, false, false,
+				false);
 		Row row1 = new Row(word1, word2);
-		Word word3 = new Word(20, 35, "di", "noun", false, false, false);
-		Word word4 = new Word(40, 35, "wang", "noun", false, false, false);
+		Word word3 = new Word(20, 35, "di", "noun", false, false, false, false);
+		Word word4 = new Word(40, 35, "wang", "noun", false, false, false,
+				false);
 		Row row2 = new Row(word3, word4);
 		Poem poem = new Poem(row1, row2);
 		poem.setLocation(110, 110);
@@ -78,8 +83,9 @@ public class TestPoem extends TestCase {
 	}
 
 	public void testShowPoem() {
-		Word word1 = new Word(10, 10, "di", "noun", false, false, false);
-		Word word2 = new Word(20, 20, "wang", "noun", false, false, false);
+		Word word1 = new Word(10, 10, "di", "noun", false, false, false, false);
+		Word word2 = new Word(20, 20, "wang", "noun", false, false, false,
+				false);
 		Row row1 = new Row(word1, word2);
 		Row row2 = new Row(word1, word2);
 		Poem poem1 = new Poem(row1, row2);

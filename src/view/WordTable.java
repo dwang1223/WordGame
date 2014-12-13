@@ -1,19 +1,29 @@
 package view;
 
-import java.awt.*;
-import java.awt.event.*;
-import java.util.ArrayList;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
-import javax.swing.*;
+import javax.swing.JButton;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-import javax.swing.table.*;
+import javax.swing.table.DefaultTableColumnModel;
+import javax.swing.table.JTableHeader;
+import javax.swing.table.TableColumn;
+import javax.swing.table.TableColumnModel;
 
-import controller.FindWordController;
-import controller.RefreshWordTableController;
+import model.Board;
+import model.WordModel;
+import controller.RefreshTableListener;
 import controller.SearchWordController;
 import controller.SortController;
-import model.*;
 
 /**
  * Set up JTable.
@@ -22,9 +32,9 @@ import model.*;
  *
  */
 public class WordTable extends JPanel {
-
+	private static final long serialVersionUID = 7765250467850231518L;
 	WordModel wordModel = null;
-//	ApplicationPanel panel = null;
+	ApplicationPanel panel = null;
 	JTable jtable = null;
 	Board board;
 
@@ -36,7 +46,7 @@ public class WordTable extends JPanel {
 	public WordTable(Board board, ApplicationPanel panel) {
 
 		this.board = board;
-//		this.panel = panel;
+		this.panel = panel;
 
 		setLayout(new FlowLayout());
 
@@ -47,7 +57,8 @@ public class WordTable extends JPanel {
 		wordModel = new WordModel(board);
 
 		// add to listener chain
-		board.addListener(new RefreshWordTableController(this));
+		// this is the point that will result in bug
+		board.addListener(new RefreshTableListener(this));
 
 		// set preferred size
 		Dimension tableSize = new Dimension(280, 550);
@@ -112,7 +123,7 @@ public class WordTable extends JPanel {
 	}
 
 	public void refreshTable() {
-		// THIS is the key method to ensure JTable view is synchronized
+		// this is the key method to ensure JTable view is synchronized
 		jtable.revalidate();
 		jtable.repaint();
 		this.revalidate();

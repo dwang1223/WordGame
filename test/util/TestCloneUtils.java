@@ -8,8 +8,9 @@ import junit.framework.TestCase;
 public class TestCloneUtils extends TestCase {
 
 	public void testClone() {
-		Word word1 = new Word(10, 10, "di", "noun", false, false, false);
-		Word word2 = new Word(20, 20, "wang", "noun", false, false, false);
+		Word word1 = new Word(10, 10, "di", "noun", false, false, false, false);
+		Word word2 = new Word(20, 20, "wang", "noun", false, false, false,
+				false);
 		// Row row1 = new Row(word1, word2);
 		// Row row2 = CloneUtils.clone(row1);
 		// Word word4 = row2.getWordList().get(0);

@@ -61,7 +61,7 @@ public class Board implements Serializable {
 	}
 
 	/** Listeners. */
-	ArrayList<Listener> listeners = new ArrayList<Listener>();
+	transient ArrayList<Listener> listeners = new ArrayList<Listener>();
 
 	/** Add a listener. */
 	public void addListener(Listener list) {
