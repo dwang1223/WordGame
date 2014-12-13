@@ -94,7 +94,7 @@ public class WordTable extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				keyWord = searchTestField.getText();
-				new SearchWordController(board, keyWord, panel).process();
+				new SearchWordController(board, panel, keyWord).process();
 			}
 		});
 
@@ -102,14 +102,9 @@ public class WordTable extends JPanel {
 				new ListSelectionListener() {
 					@Override
 					public void valueChanged(ListSelectionEvent e) {
-						// board.findWordList = new ArrayList<Word>();
-						// int index = jtable.getSelectedRow();
-						// Word selectedWord =
-						// board.unprotectedWords.get(index);
-						// board.findWordList.add(selectedWord);
-						// // System.out.println(selectedWord.getContent());
-						// new FindWordController(board, panel,
-						// selectedWord).process();
+						int row = jtable.getSelectedRow();
+						String keyWord = jtable.getValueAt(row, 0).toString();
+						new SearchWordController(board, panel, keyWord).process();
 					}
 
 				});

@@ -1,11 +1,7 @@
 package controller;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.ArrayList;
-
-import model.*;
-import view.*;
+import model.Board;
+import view.ApplicationPanel;
 
 /**
  * This class is responsible for searching the word which is shown in text
@@ -20,11 +16,11 @@ public class SearchWordController {
 	String keyWord;
 	ApplicationPanel panel;
 
-	public SearchWordController(Board board, String keyWord,
-			ApplicationPanel panel) {
+	public SearchWordController(Board board, ApplicationPanel panel,
+			String keyWord) {
 		this.board = board;
-		this.keyWord = keyWord;
 		this.panel = panel;
+		this.keyWord = keyWord;
 	}
 
 	public void process() {

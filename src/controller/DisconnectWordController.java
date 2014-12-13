@@ -90,7 +90,9 @@ public class DisconnectWordController extends MouseAdapter {
 		if (Board.isOutOfProtectedArea(word)) {
 			ok = false;
 		} else {
-			if (!word.isInRow()) {
+			if (word.isInPoem()) {
+				ok = false;
+			} else if (!word.isInRow()) {
 				ok = false;
 			} else {
 				ArrayList<Row> rows = model.getBoard().rows;
@@ -116,7 +118,7 @@ public class DisconnectWordController extends MouseAdapter {
 
 			ArrayList<Row> rows = model.getBoard().rows;
 			Row row = model.getBoard().getRowFromRowListByWord(rows, word);
-			if(!row.removeWord(word)){
+			if (!row.removeWord(word)) {
 				// if the size of row is 1
 				model.getBoard().removeRow(row);
 			}

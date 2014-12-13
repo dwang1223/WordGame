@@ -132,7 +132,8 @@ public class ApplicationPanel extends JPanel {
 		if (g == null) {
 			return;
 		}
-		// this.showBoardState();
+		// test show state
+//		this.showBoardState();
 		if (word.isProtected()) {
 			g.setColor(Color.WHITE);
 			if (word.isInRow()) {
@@ -142,9 +143,9 @@ public class ApplicationPanel extends JPanel {
 				}
 			}
 		} else {
-			if(word.isSearched()){
+			if (word.isSearched()) {
 				g.setColor(Color.RED);
-			}else{
+			} else {
 				g.setColor(Color.LIGHT_GRAY);
 			}
 		}
@@ -172,10 +173,12 @@ public class ApplicationPanel extends JPanel {
 		ArrayList<Word> words = model.getBoard().words;
 		ArrayList<Row> rows = model.getBoard().rows;
 		System.out.println("Words");
-		System.out.println("content   isProtected   isInRow   x   y");
+		System.out
+				.println("content   isProtected   isInRow   isInPoem   isSearched   x   y");
 		for (Word word : words) {
 			System.out.println(word.getContent() + "   " + word.isProtected()
-					+ "   " + word.isInRow() + "   " + word.getX() + "   "
+					+ "   " + word.isInRow() + "   " + word.isInPoem() + "   "
+					+ word.isSearched() + "   " + word.getX() + "   "
 					+ word.getY());
 		}
 		System.out.println("Rows");
@@ -185,6 +188,7 @@ public class ApplicationPanel extends JPanel {
 			for (Word word : wordList) {
 				System.out.println(word.getContent() + "   "
 						+ word.isProtected() + "   " + word.isInRow() + "   "
+						+ word.isInPoem() + "   " + word.isSearched() + "   "
 						+ word.getX() + "   " + word.getY());
 			}
 		}
