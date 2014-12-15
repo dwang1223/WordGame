@@ -64,13 +64,13 @@ public class TestPoem extends TestCase {
 		Row row2 = new Row(word3, word4);
 		Poem poem = new Poem(row1, row2);
 		poem.setLocation(110, 110);
-		for (Row row : poem.getRowList()) {
-			System.out.println("=======================");
-			for (Word word : row.getWordList()) {
-				System.out.println("wordX: " + word.getX() + "   wordY: "
-						+ word.getY());
-			}
-		}
+//		for (Row row : poem.getRowList()) {
+//			System.out.println("=======================");
+//			for (Word word : row.getWordList()) {
+//				System.out.println("wordX: " + word.getX() + "   wordY: "
+//						+ word.getY());
+//			}
+//		}
 		// row1.setLocation(110, 110);
 		// for (Word word : row1.getWordList()) {
 		// System.out.println("wordX: " + word.getX() + "   wordY: "
@@ -86,9 +86,18 @@ public class TestPoem extends TestCase {
 		Word word1 = new Word(10, 10, "di", "noun", false, false, false, false);
 		Word word2 = new Word(20, 20, "wang", "noun", false, false, false,
 				false);
+		Word word3 = new Word(10, 10, "so", "noun", false, false, false, false);
+		Word word4 = new Word(20, 20, "cool", "noun", false, false, false,
+				false);
 		Row row1 = new Row(word1, word2);
-		Row row2 = new Row(word1, word2);
+		Row row2 = new Row(word3, word4);
 		Poem poem1 = new Poem(row1, row2);
-		// poem1.showPoem();
+		Poem poem2 = new Poem(row2, row1);
+		poem1.addPoem(poem2, true);
+//		poem1.addPoem(poem2, true);
+		poem1.addPoem(poem2, false);
+		System.out.println("=============");
+		poem1.showPoem();
+		System.out.println("=============");
 	}
 }

@@ -21,6 +21,12 @@ import model.Model;
 import model.Word;
 import view.ApplicationPanel;
 
+/**
+ * PublishController Class
+ * 
+ * @author diwang
+ *
+ */
 public class PublishController extends MouseAdapter {
 
 	/** Needed for controller behavior. */

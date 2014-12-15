@@ -1,15 +1,24 @@
 package controller;
 
 import model.Model;
+import view.Application;
 import view.ApplicationPanel;
 
+/**
+ * RedoController Class
+ * 
+ * @author diwang
+ *
+ */
 public class RedoController {
 	Model model;
+	Application app;
 	ApplicationPanel canvas;
 
-	public RedoController(Model m, ApplicationPanel canvas) {
+	public RedoController(Model m, Application app) {
 		this.model = m;
-		this.canvas = canvas;
+		this.app = app;
+		this.canvas = app.getWordPanel();
 	}
 
 	public boolean process() {
@@ -19,6 +28,9 @@ public class RedoController {
 		}
 
 		m.redo();
+
+		// refresh table
+		app.getWordTable().refreshTable(m.getNewBoard());
 
 		// force board to redraw
 		canvas.redraw();

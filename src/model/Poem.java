@@ -44,6 +44,14 @@ public class Poem implements Serializable {
 		}
 	}
 
+	public int getHeight() {
+		int height = 0;
+		for (Row row : rowList) {
+			height = height + row.getHeight();
+		}
+		return height;
+	}
+	
 	public int getX() {
 		return rowList.get(0).getX();
 	}
@@ -103,6 +111,30 @@ public class Poem implements Serializable {
 			return false;
 		}
 		return true;
+	}
+
+	public boolean addPoem(Poem poem, boolean isDown) {
+		List<Row> rowListTemp = new ArrayList<Row>();
+		if (poem != null) {
+			if (isDown) {
+				this.rowList.addAll(poem.rowList);
+			} else {
+				int rowSize = rowList.size();
+				for (int i = 0; i < rowSize; i++) {
+					rowListTemp.add(rowList.get(i));
+				}
+				this.rowList.clear();
+				for (Row row1 : poem.rowList) {
+					this.rowList.add(row1);
+				}
+				for (Row row2 : rowListTemp) {
+					this.rowList.add(row2);
+				}
+			}
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	public void showPoem() {

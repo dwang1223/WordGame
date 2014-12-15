@@ -12,6 +12,7 @@ import javax.swing.JPanel;
 import model.Board;
 import model.Model;
 import controller.AddWordController;
+import controller.ConnectPoemController;
 import controller.ConnectRowController;
 import controller.ConnectWordController;
 import controller.DisconnectRowController;
@@ -22,6 +23,8 @@ import controller.MoveWordController;
 import controller.PublishController;
 import controller.RedoController;
 import controller.RemoveWordController;
+import controller.ShiftRowController;
+import controller.StartWordController;
 import controller.UndoController;
 
 /**
@@ -41,6 +44,7 @@ public class Application extends JFrame {
 	JPanel bottomMenuPanel;
 	WordTable wordTable;
 
+	JButton startButton;
 	JButton addButton;
 	JButton removeButton;
 	JButton moveWordButton;
@@ -49,7 +53,9 @@ public class Application extends JFrame {
 	JButton disconnectButton;
 	JButton connectRowButton;
 	JButton disconnectRowButton;
+	JButton shiftRowButton;
 	JButton movePoemButton;
+	JButton connectPoemButton;
 	JButton publishButton;
 	JButton undoButton;
 	JButton redoButton;
@@ -113,6 +119,15 @@ public class Application extends JFrame {
 				Board.heightOfBottomMenu);
 		bottomMenuPanel.setBackground(Color.RED);
 
+		startButton = new JButton("Start");
+		bottomMenuPanel.add(startButton);
+
+		shiftRowButton = new JButton("Shift Row");
+		bottomMenuPanel.add(shiftRowButton);
+
+		connectPoemButton = new JButton("Connect Poem");
+		bottomMenuPanel.add(connectPoemButton);
+
 		movePoemButton = new JButton("Move Poem");
 		bottomMenuPanel.add(movePoemButton);
 
@@ -126,6 +141,16 @@ public class Application extends JFrame {
 		bottomMenuPanel.add(publishButton);
 
 		pane.add(bottomMenuPanel);
+
+		startButton.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				// register controller
+				new StartWordController(model, Application.this).process();
+				startButton.setEnabled(false);
+			}
+		});
 
 		publishButton.addActionListener(new ActionListener() {
 
@@ -141,7 +166,7 @@ public class Application extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				new UndoController(model, panel).process();
+				new UndoController(model, Application.this).process();
 			}
 		});
 
@@ -149,7 +174,7 @@ public class Application extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				new RedoController(model, panel).process();
+				new RedoController(model, Application.this).process();
 			}
 		});
 
@@ -158,7 +183,7 @@ public class Application extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				// register controller
-				new AddWordController(model, panel).register();
+				new AddWordController(model, Application.this).register();
 			}
 		});
 
@@ -167,7 +192,7 @@ public class Application extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				// register controller
-				new RemoveWordController(model, panel).register();
+				new RemoveWordController(model, Application.this).register();
 			}
 		});
 
@@ -226,6 +251,24 @@ public class Application extends JFrame {
 			}
 		});
 
+		shiftRowButton.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				// register controller
+				new ShiftRowController(model, Application.this).register();
+			}
+		});
+
+		connectPoemButton.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				new ConnectPoemController(model, Application.this).register();
+			}
+		});
+
 		movePoemButton.addActionListener(new ActionListener() {
 
 			@Override
@@ -246,6 +289,10 @@ public class Application extends JFrame {
 
 	public ApplicationPanel getWordPanel() {
 		return panel;
+	}
+
+	public WordTable getWordTable() {
+		return wordTable;
 	}
 
 }

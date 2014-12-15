@@ -192,12 +192,10 @@ public class MovePoemController extends MouseAdapter {
 			return false;
 		}
 		// now released we can create Move
-		MovePoem move = new MovePoem(selectedPoem, originalx, originaly,
-				selectedPoem.getX(), selectedPoem.getY(), originalBoard, model);
-		if (move.execute()) {
-			model.recordUndoMove(move);
-			model.clearRedoMoves();
-		}
+		RealMove realMove = new RealMove(originalBoard, model);
+		realMove.execute();
+		model.recordUndoMove(realMove);
+		model.clearRedoMoves();
 
 		// no longer selected
 		model.setSelectedRow(null);

@@ -7,18 +7,27 @@ import java.awt.event.MouseEvent;
 import model.Board;
 import model.Model;
 import model.Word;
+import view.Application;
 import view.ApplicationPanel;
 
+/**
+ * RemoveWordController Class
+ * 
+ * @author diwang
+ *
+ */
 public class RemoveWordController extends MouseAdapter {
 
 	/** Needed for controller behavior. */
 	Model model;
+	Application app;
 	ApplicationPanel panel;
 
 	/** Constructor holds onto key manager objects. */
-	public RemoveWordController(Model model, ApplicationPanel panel) {
+	public RemoveWordController(Model model, Application app) {
 		this.model = model;
-		this.panel = panel;
+		this.app = app;
+		this.panel = app.getWordPanel();
 	}
 
 	/** Set up press events but no motion events. */
@@ -52,6 +61,8 @@ public class RemoveWordController extends MouseAdapter {
 			Toolkit.getDefaultToolkit().beep();
 		} else {
 			model.getBoard().removeWord(word);
+
+			app.getWordTable().refreshTable();
 			panel.redraw();
 			panel.repaint();
 		}

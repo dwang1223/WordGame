@@ -1,18 +1,17 @@
 package controller;
 
-import view.ApplicationPanel;
+import junit.framework.TestCase;
 import model.Board;
 import model.Model;
-import junit.framework.TestCase;
+import view.Application;
 
 public class TestAddWordController extends TestCase {
 	public void testConstruction() {
 		Board b = new Board();
 		Model model = new Model(b);
-		ApplicationPanel panel = new ApplicationPanel(model);
-		;
+		Application app = new Application(model);
 		// register controller
-		AddWordController addWordController = new AddWordController(model, panel);
+		AddWordController addWordController = new AddWordController(model, app);
 		addWordController.register();
 		addWordController.process(0, 0);
 	}

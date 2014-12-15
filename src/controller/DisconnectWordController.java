@@ -186,13 +186,11 @@ public class DisconnectWordController extends MouseAdapter {
 
 		// now released we can create Move
 		model.getBoard().addWord(selected);
-		DisconnectWord disconnect = new DisconnectWord(selected, originalx,
-				originaly, selected.getX(), selected.getY(), originalBoard,
-				model.getBoard(), model);
-		if (disconnect.execute()) {
-			model.recordUndoMove(disconnect);
-			model.clearRedoMoves();
-		}
+
+		RealMove realMove = new RealMove(originalBoard, model);
+		realMove.execute();
+		model.recordUndoMove(realMove);
+		model.clearRedoMoves();
 
 		// no longer selected
 		model.setSelectedWord(null);

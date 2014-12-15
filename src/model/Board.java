@@ -27,6 +27,10 @@ public class Board implements Serializable {
 	public final static int heightOfUnprotectedArea = 200;
 	public final static int heightOfBottomMenu = 50;
 
+	/** Listeners. */
+	ArrayList<Listener> listeners = new ArrayList<Listener>();
+	// transient ArrayList<Listener> listeners = new ArrayList<Listener>();
+
 	/** Words being maintained. */
 	public ArrayList<Word> words = new ArrayList<Word>();
 	/** Rows being maintained. */
@@ -60,9 +64,6 @@ public class Board implements Serializable {
 		return null;
 	}
 
-	/** Listeners. */
-	transient ArrayList<Listener> listeners = new ArrayList<Listener>();
-
 	/** Add a listener. */
 	public void addListener(Listener list) {
 		listeners.add(list);
@@ -85,7 +86,6 @@ public class Board implements Serializable {
 					word.getType(), word.isProtected(), word.isInRow(), word
 							.isInPoem(), word.isSearched()));
 		}
-		// chen chen added
 		// state changed
 		notifyListeners();
 	}
@@ -130,44 +130,41 @@ public class Board implements Serializable {
 	public void addWord(Word word) {
 		words.add(word);
 		// state changed
-		notifyListeners();
+//		notifyListeners();
 	}
 
 	/** Remove word from board. */
 	public void removeWord(Word word) {
 		words.remove(word);
 		// state changed
-		notifyListeners();
+//		notifyListeners();
 	}
 
 	/** Add row to board. */
 	public void addRow(Row row) {
 		rows.add(row);
-		// state changed
-		notifyListeners();
 	}
 
 	/** Remove row from board. */
 	public void removeRow(Row row) {
 		rows.remove(row);
-		// state changed
-		notifyListeners();
 	}
 
 	/** Add poem to board. */
 	public void addPoem(Poem poem) {
 		poems.add(poem);
-		// state changed
-		notifyListeners();
 	}
 
 	/** Remove poem from board. */
 	public void removePoem(Poem poem) {
 		poems.remove(poem);
-		// state changed
-		notifyListeners();
 	}
 
+	/** Remove poem from board. */
+	public void removePoemByIndex(int index) {
+		poems.remove(index);
+	}
+	
 	/** Return shape that intersects (x,y) point. */
 	public Word findWord(int x, int y) {
 		for (Word word : words) {

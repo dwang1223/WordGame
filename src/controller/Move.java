@@ -1,5 +1,7 @@
 package controller;
 
+import model.Board;
+
 /**
  * Move Class
  * 
@@ -16,4 +18,8 @@ public abstract class Move {
 	
 	/** Request redo. */
 	public abstract boolean redo();
+	
+	public abstract Board getOldBoard();
+	
+	public abstract Board getNewBoard();
 }

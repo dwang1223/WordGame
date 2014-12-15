@@ -190,13 +190,10 @@ public class DisconnectRowController extends MouseAdapter {
 		}
 
 		// now released we can create Move
-		DisconnectRow disconnectRow = new DisconnectRow(selectedRow, originalx,
-				originaly, selectedRow.getX(), selectedRow.getY(),
-				originalBoard, model);
-		if (disconnectRow.execute()) {
-			model.recordUndoMove(disconnectRow);
-			model.clearRedoMoves();
-		}
+		RealMove realMove = new RealMove(originalBoard, model);
+		realMove.execute();
+		model.recordUndoMove(realMove);
+		model.clearRedoMoves();
 
 		// no longer selected
 		model.setSelectedRow(null);

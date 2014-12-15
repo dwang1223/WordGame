@@ -14,6 +14,7 @@ import javax.swing.JPanel;
 
 import model.Board;
 import model.Model;
+import model.Poem;
 import model.Row;
 import model.Word;
 
@@ -172,6 +173,7 @@ public class ApplicationPanel extends JPanel {
 	public void showBoardState() {
 		ArrayList<Word> words = model.getBoard().words;
 		ArrayList<Row> rows = model.getBoard().rows;
+		ArrayList<Poem> poems = model.getBoard().poems;
 		System.out.println("Words");
 		System.out
 				.println("content   isProtected   isInRow   isInPoem   isSearched   x   y");

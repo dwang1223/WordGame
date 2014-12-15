@@ -92,7 +92,9 @@ public class MoveRowController extends MouseAdapter {
 
 		boolean ok = true;
 
-		if (!word.isInRow()) {
+		if (word.isInPoem()) {
+			ok = false;
+		} else if (!word.isInRow()) {
 			ok = false;
 		}
 		if (!ok) {
@@ -174,12 +176,10 @@ public class MoveRowController extends MouseAdapter {
 			return false;
 		}
 		// now released we can create Move
-		MoveRow move = new MoveRow(selectedRow, originalx, originaly,
-				selectedRow.getX(), selectedRow.getY(), originalBoard, model);
-		if (move.execute()) {
-			model.recordUndoMove(move);
-			model.clearRedoMoves();
-		}
+		RealMove realMove = new RealMove(originalBoard, model);
+		realMove.execute();
+		model.recordUndoMove(realMove);
+		model.clearRedoMoves();
 
 		// no longer selected
 		model.setSelectedRow(null);

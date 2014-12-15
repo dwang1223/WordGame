@@ -7,18 +7,27 @@ import java.awt.event.MouseEvent;
 import model.Board;
 import model.Model;
 import model.Word;
+import view.Application;
 import view.ApplicationPanel;
 
+/**
+ * AddWordController Class
+ * 
+ * @author diwang
+ *
+ */
 public class AddWordController extends MouseAdapter {
 
 	/** Needed for controller behavior. */
 	Model model;
+	Application app;
 	ApplicationPanel panel;
 
 	/** Constructor holds onto key manager objects. */
-	public AddWordController(Model model, ApplicationPanel panel) {
+	public AddWordController(Model model, Application app) {
 		this.model = model;
-		this.panel = panel;
+		this.app = app;
+		this.panel = app.getWordPanel();
 	}
 
 	/** Set up press events but no motion events. */
@@ -54,21 +63,14 @@ public class AddWordController extends MouseAdapter {
 		if (Board.isOutOfUnprotectedArea(word)) {
 			ok = false;
 		}
-		// else {
-		// for (Word w : model.getBoard()) {
-		// // judge whether intersect
-		// if (w.intersects(word)) {
-		// ok = false;
-		// break;
-		// }
-		// }
-		// }
 
 		if (!ok) {
 			Toolkit.getDefaultToolkit().beep();
 		} else {
 			word.setProtected(false);
 			model.getBoard().addWord(word);
+
+			app.getWordTable().refreshTable();
 			panel.redraw();
 			panel.repaint();
 		}

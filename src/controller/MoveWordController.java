@@ -185,17 +185,16 @@ public class MoveWordController extends MouseAdapter {
 
 		// now released we can create Move
 		model.getBoard().addWord(selected);
-		MoveWord move = new MoveWord(selected, originalx, originaly,
-				selected.getX(), selected.getY(), originalIsProtected,
-				selected.isProtected(), originalBoard, model.getBoard(), model);
-		if (move.execute()) {
-			model.recordUndoMove(move);
-			model.clearRedoMoves();
-		}
+
+		RealMove realMove = new RealMove(originalBoard, model);
+		realMove.execute();
+		model.recordUndoMove(realMove);
+		model.clearRedoMoves();
 
 		// no longer selected
 		model.setSelectedWord(null);
 
+		app.getWordTable().refreshTable();
 		panel.redraw();
 		panel.repaint();
 		return true;

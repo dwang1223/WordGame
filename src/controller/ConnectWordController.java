@@ -172,68 +172,65 @@ public class ConnectWordController extends MouseAdapter {
 			return false;
 		}
 
-//		if (!selected.isInRow()) {// if selected is not in row
-			ArrayList<Word> words = model.getBoard().words;
-			ArrayList<Row> rows = model.getBoard().rows;
-			// connect words which are close to each other
-			for (Word word : words) {
-				if (word.isProtected()) {// word should be protected
-					if (!selected.equals(word)) {// word should be different
-													// from
-													// selected
-						double distanceR = getDistance(selected.getX(),
-								selected.getY(), word.getX() + word.getWidth(),
+		// if (!selected.isInRow()) {// if selected is not in row
+		ArrayList<Word> words = model.getBoard().words;
+		ArrayList<Row> rows = model.getBoard().rows;
+		// connect words which are close to each other
+		for (Word word : words) {
+			if (word.isProtected()) {// word should be protected
+				if (!selected.equals(word)) {// word should be different
+												// from
+												// selected
+					double distanceR = getDistance(selected.getX(),
+							selected.getY(), word.getX() + word.getWidth(),
+							word.getY());
+					double distanceL = getDistance(
+							selected.getX() + selected.getWidth(),
+							selected.getY(), word.getX(), word.getY());
+					if (distanceR < 20) {// In the right connectable area
+						selected.setLocation(word.getX() + word.getWidth(),
 								word.getY());
-						double distanceL = getDistance(selected.getX()
-								+ selected.getWidth(), selected.getY(),
-								word.getX(), word.getY());
-						if (distanceR < 20) {// In the right connectable area
-							selected.setLocation(word.getX() + word.getWidth(),
-									word.getY());
-							if (!word.isInRow()) {
-								// If word is not in row, create a new row
-								Row row = new Row(word, selected);
-								model.getBoard().addRow(row);
-							} else {
-								// If word is in row, add selected word to the
-								// row
-								Row row = model.getBoard()
-										.getRowFromRowListByWord(rows, word);
-								row.addWord(selected, true);
-							}
-						} else if (distanceL < 20) {// In the left connectable
-													// area
-							selected.setLocation(
-									word.getX() - selected.getWidth(),
-									word.getY());
-							if (!word.isInRow()) {
-								// If word is not in row, create a new row
-								Row row = new Row(selected, word);
-								model.getBoard().addRow(row);
-							} else {
-								// If word is in row, add selected word to the
-								// row
-								Row row = model.getBoard()
-										.getRowFromRowListByWord(rows, word);
-								row.addWord(selected, false);
-							}
-
+						if (!word.isInRow()) {
+							// If word is not in row, create a new row
+							Row row = new Row(word, selected);
+							model.getBoard().addRow(row);
+						} else {
+							// If word is in row, add selected word to the
+							// row
+							Row row = model.getBoard().getRowFromRowListByWord(
+									rows, word);
+							row.addWord(selected, true);
 						}
+					} else if (distanceL < 20) {// In the left connectable
+												// area
+						selected.setLocation(word.getX() - selected.getWidth(),
+								word.getY());
+						if (!word.isInRow()) {
+							// If word is not in row, create a new row
+							Row row = new Row(selected, word);
+							model.getBoard().addRow(row);
+						} else {
+							// If word is in row, add selected word to the
+							// row
+							Row row = model.getBoard().getRowFromRowListByWord(
+									rows, word);
+							row.addWord(selected, false);
+						}
+
 					}
 				}
-//				System.out.println(word.getContent());
 			}
-//		}
+			// System.out.println(word.getContent());
+		}
+		// }
 
 		// now released we can create Move
 		model.getBoard().addWord(selected);
-		ConnectWord connect = new ConnectWord(selected, originalx, originaly,
-				selected.getX(), selected.getY(), originalBoard,
-				model.getBoard(), model);
-		if (connect.execute()) {
-			model.recordUndoMove(connect);
-			model.clearRedoMoves();
-		}
+
+		RealMove realMove = new RealMove(originalBoard, model);
+		realMove.execute();
+		model.recordUndoMove(realMove);
+		model.clearRedoMoves();
 
 		// no longer selected
 		model.setSelectedWord(null);

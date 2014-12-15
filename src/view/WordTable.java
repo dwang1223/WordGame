@@ -21,35 +21,30 @@ import javax.swing.table.TableColumnModel;
 
 import model.Board;
 import model.WordModel;
-import controller.RefreshTableListener;
 import controller.SearchWordController;
 import controller.SortController;
 
 /**
  * Set up JTable.
  * 
- * @author Chen Chen
+ * @author Chen Chen, Di Wang
  *
  */
 public class WordTable extends JPanel {
 	private static final long serialVersionUID = 7765250467850231518L;
-	WordModel wordModel = null;
 	ApplicationPanel panel = null;
+	WordModel wordModel = null;
+	JScrollPane jsp = null;
 	JTable jtable = null;
-	Board board;
-
-	JButton searchButton;
-	JTextField searchTestField;
+	Dimension tableSize = null;
+	JButton searchButton = null;
+	JTextField searchTestField = null;
 
 	String keyWord;
 
 	public WordTable(Board board, ApplicationPanel panel) {
-
-		this.board = board;
-		this.panel = panel;
-
 		setLayout(new FlowLayout());
-
+		this.panel = panel;
 		searchTestField = new JTextField(10);
 		searchButton = new JButton("search");
 
@@ -57,17 +52,26 @@ public class WordTable extends JPanel {
 		wordModel = new WordModel(board);
 
 		// add to listener chain
-		// this is the point that will result in bug
-		board.addListener(new RefreshTableListener(this));
+		// board.addListener(new RefreshTableListener(this));
 
-		// set preferred size
-		Dimension tableSize = new Dimension(280, 550);
+		// the proposed dimension of the UI
+		tableSize = new Dimension(280, 550);
 
+		// Scrollable panel will enclose the JTable and support scrolling
+		// vertically
+		jsp = new JScrollPane();
+		jsp.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+		jsp.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+		jsp.setPreferredSize(tableSize);
+
+		// Just add the JTable to the set. First create the list of Players,
+		// then the SwingModel that supports the JTable which you now create.
 		jtable = new JTable(wordModel);
-		jtable.setPreferredSize(tableSize);
 
+		// let's tell the JTable about its columns.
 		TableColumnModel columnModel = new DefaultTableColumnModel();
 
+		// must build one by one...
 		String[] headers = new String[] { WordModel.wordLabel,
 				WordModel.typeLabel };
 		int index = 0;
@@ -77,18 +81,21 @@ public class WordTable extends JPanel {
 			columnModel.addColumn(col);
 		}
 		jtable.setColumnModel(columnModel);
+
+		// let's install a sorter and also make sure no one can rearrange
+		// columns
 		JTableHeader header = jtable.getTableHeader();
+
+		// purpose of this sorter is to sort by columns.
 		header.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				JTableHeader h = (JTableHeader) e.getSource();
 				new SortController(WordTable.this).process(h, e.getPoint());
 			}
 		});
-		JScrollPane jsp = new JScrollPane(jtable);
-		jsp.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-		jsp.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-		jsp.setPreferredSize(tableSize);
-		// jsp.setViewportView(jtable);
+
+		// Here's the trick. Make the JScrollPane take its view from the JTable.
+		jsp.setViewportView(jtable);
 
 		searchButton.addActionListener(new ActionListener() {
 			@Override
@@ -104,13 +111,15 @@ public class WordTable extends JPanel {
 					public void valueChanged(ListSelectionEvent e) {
 						int row = jtable.getSelectedRow();
 						String keyWord = jtable.getValueAt(row, 0).toString();
-						new SearchWordController(board, panel, keyWord).process();
+						new SearchWordController(board, panel, keyWord)
+								.process();
 					}
 
 				});
 
+		// add the scrolling Pane which encapsulates the JTable physical size
+		// limited
 		this.setPreferredSize(tableSize);
-
 		this.add(searchTestField);
 		this.add(searchButton);
 
@@ -125,4 +134,53 @@ public class WordTable extends JPanel {
 		this.repaint();
 	}
 
+	public void refreshTable(Board board) {
+		wordModel = new WordModel(board);
+		jtable = new JTable(wordModel);
+		this.remove(jsp);
+		jsp = new JScrollPane(jtable);
+		jsp.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+		jsp.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+		jsp.setPreferredSize(tableSize);
+		// let's tell the JTable about its columns.
+		TableColumnModel columnModel = new DefaultTableColumnModel();
+
+		// must build one by one...
+		String[] headers = new String[] { WordModel.wordLabel,
+				WordModel.typeLabel };
+		int index = 0;
+		for (String h : headers) {
+			TableColumn col = new TableColumn(index++);
+			col.setHeaderValue(h);
+			columnModel.addColumn(col);
+		}
+		jtable.setColumnModel(columnModel);
+
+		// let's install a sorter and also make sure no one can rearrange
+		// columns
+		JTableHeader header = jtable.getTableHeader();
+
+		// purpose of this sorter is to sort by columns.
+		header.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				JTableHeader h = (JTableHeader) e.getSource();
+				new SortController(WordTable.this).process(h, e.getPoint());
+			}
+		});
+
+		jtable.getSelectionModel().addListSelectionListener(
+				new ListSelectionListener() {
+					@Override
+					public void valueChanged(ListSelectionEvent e) {
+						int row = jtable.getSelectedRow();
+						String keyWord = jtable.getValueAt(row, 0).toString();
+						new SearchWordController(board, panel, keyWord)
+								.process();
+					}
+
+				});
+		this.add(jsp);
+		this.revalidate();
+		this.repaint();
+	}
 }
