@@ -22,6 +22,7 @@ import controller.MoveRowController;
 import controller.MoveWordController;
 import controller.PublishController;
 import controller.RedoController;
+import controller.ReleasePoemController;
 import controller.RemoveWordController;
 import controller.ShiftRowController;
 import controller.StartWordController;
@@ -54,8 +55,9 @@ public class Application extends JFrame {
 	JButton connectRowButton;
 	JButton disconnectRowButton;
 	JButton shiftRowButton;
-	JButton movePoemButton;
 	JButton connectPoemButton;
+	JButton movePoemButton;
+	JButton releasePoemButton;
 	JButton publishButton;
 	JButton undoButton;
 	JButton redoButton;
@@ -131,6 +133,9 @@ public class Application extends JFrame {
 		movePoemButton = new JButton("Move Poem");
 		bottomMenuPanel.add(movePoemButton);
 
+		releasePoemButton = new JButton("Release Poem");
+		bottomMenuPanel.add(releasePoemButton);
+		
 		undoButton = new JButton("Undo");
 		bottomMenuPanel.add(undoButton);
 
@@ -278,6 +283,15 @@ public class Application extends JFrame {
 			}
 		});
 
+		releasePoemButton.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				new ReleasePoemController(model, Application.this).register();
+			}
+		});
+		
 		/**
 		 * Add word table into the frame
 		 */

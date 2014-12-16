@@ -179,6 +179,7 @@ public class MoveWordController extends MouseAdapter {
 		if (Board.isOutOfUnprotectedArea(selected)) {
 			// protect word
 			selected.setProtected(true);
+			selected.setSearched(false);
 		} else {
 			selected.setProtected(false);
 		}
