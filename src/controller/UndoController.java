@@ -1,6 +1,5 @@
 package controller;
 
-import model.Board;
 import model.Model;
 import view.Application;
 import view.ApplicationPanel;

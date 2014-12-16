@@ -9,7 +9,6 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
 import model.Board;
-import model.BoardMemento;
 import model.Model;
 import view.Application;
 
@@ -22,7 +21,7 @@ public class Main {
 		ObjectOutputStream oos = null;
 		try {
 			oos = new ObjectOutputStream(new FileOutputStream(location));
-			oos.writeObject(b.getState());
+			oos.writeObject(b);
 		} catch (Exception e) {
 			
 		}
@@ -38,9 +37,8 @@ public class Main {
 		 Board b = new Board();
 		 try {
 			 ois = new ObjectInputStream (new FileInputStream(location));
-			 BoardMemento m = (BoardMemento) ois.readObject();
+			 b = (Board) ois.readObject();
 			 ois.close();
-			 b.restore(m);
 		 } catch (Exception e) {
 			 // unable to perform restore
 		 }
@@ -83,7 +81,7 @@ public class Main {
 		pr.addWindowListener (new WindowAdapter() {
 
 			public void windowClosing(WindowEvent e) {
-//				storeState(b, defaultStorage);
+				storeState(b, defaultStorage);
 				System.exit(0);
 			}
 		});

@@ -39,8 +39,7 @@ public class WordTable extends JPanel {
 	Dimension tableSize = null;
 	JButton searchButton = null;
 	JTextField searchTestField = null;
-
-	String keyWord;
+	String keyWord = null;
 
 	public WordTable(Board board, ApplicationPanel panel) {
 		setLayout(new FlowLayout());
@@ -50,9 +49,6 @@ public class WordTable extends JPanel {
 
 		// create the model for the data which backs this table
 		wordModel = new WordModel(board);
-
-		// add to listener chain
-		// board.addListener(new RefreshTableListener(this));
 
 		// the proposed dimension of the UI
 		tableSize = new Dimension(280, 550);

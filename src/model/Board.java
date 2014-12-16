@@ -75,22 +75,6 @@ public class Board implements Serializable {
 	}
 
 	/**
-	 * Reset board to state encoded by memento
-	 * 
-	 * @param m
-	 */
-	public void restore(BoardMemento m) {
-		words = new ArrayList<Word>();
-		for (Word word : m.stored) {
-			words.add(new Word(word.getX(), word.getY(), word.getContent(),
-					word.getType(), word.isProtected(), word.isInRow(), word
-							.isInPoem(), word.isSearched()));
-		}
-		// state changed
-		notifyListeners();
-	}
-
-	/**
 	 * get the unprotected words
 	 * 
 	 * @return
@@ -122,9 +106,9 @@ public class Board implements Serializable {
 		return searchedWords;
 	}
 
-	public BoardMemento getState() {
-		return new BoardMemento(words);
-	}
+//	public BoardMemento getState() {
+//		return new BoardMemento(words);
+//	}
 
 	/** Add word to board. */
 	public void addWord(Word word) {
