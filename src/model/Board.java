@@ -27,6 +27,7 @@ public class Board implements Serializable {
 	public final static int heightOfUnprotectedArea = 200;
 	public final static int heightOfBottomMenu = 50;
 
+	
 	/** Listeners. */
 	ArrayList<Listener> listeners = new ArrayList<Listener>();
 	// transient ArrayList<Listener> listeners = new ArrayList<Listener>();
