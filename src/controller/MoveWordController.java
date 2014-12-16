@@ -195,7 +195,7 @@ public class MoveWordController extends MouseAdapter {
 		// no longer selected
 		model.setSelectedWord(null);
 
-		app.getWordTable().refreshTable();
+		app.getWordTable().refreshTable(model.getBoard());
 		panel.redraw();
 		panel.repaint();
 		return true;

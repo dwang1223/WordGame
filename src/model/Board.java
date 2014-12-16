@@ -6,8 +6,6 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
 
-import controller.Listener;
-
 /**
  * Board Class
  * 
@@ -29,8 +27,7 @@ public class Board implements Serializable {
 
 	
 	/** Listeners. */
-	ArrayList<Listener> listeners = new ArrayList<Listener>();
-	// transient ArrayList<Listener> listeners = new ArrayList<Listener>();
+//	ArrayList<Listener> listeners = new ArrayList<Listener>();
 
 	/** Words being maintained. */
 	public ArrayList<Word> words = new ArrayList<Word>();
@@ -66,14 +63,14 @@ public class Board implements Serializable {
 	}
 
 	/** Add a listener. */
-	public void addListener(Listener list) {
-		listeners.add(list);
-	}
+//	public void addListener(Listener list) {
+//		listeners.add(list);
+//	}
 
 	/** Remove a listener. */
-	public void removeListener(Listener list) {
-		listeners.remove(list);
-	}
+//	public void removeListener(Listener list) {
+//		listeners.remove(list);
+//	}
 
 	/**
 	 * get the unprotected words
@@ -106,10 +103,6 @@ public class Board implements Serializable {
 		}
 		return searchedWords;
 	}
-
-//	public BoardMemento getState() {
-//		return new BoardMemento(words);
-//	}
 
 	/** Add word to board. */
 	public void addWord(Word word) {
@@ -186,13 +179,13 @@ public class Board implements Serializable {
 	 * 
 	 * During this event, no new changes can happen.
 	 */
-	void notifyListeners() {
-		synchronized (listeners) {
-			for (Listener list : listeners) {
-				list.update();
-			}
-		}
-	}
+//	void notifyListeners() {
+//		synchronized (listeners) {
+//			for (Listener list : listeners) {
+//				list.update();
+//			}
+//		}
+//	}
 
 	public static boolean isOutOfBound(Word word) {
 		int widthOfWord = word.getWidth();

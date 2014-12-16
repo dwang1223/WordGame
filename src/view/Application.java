@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import model.Board;
@@ -135,7 +136,7 @@ public class Application extends JFrame {
 
 		releasePoemButton = new JButton("Release Poem");
 		bottomMenuPanel.add(releasePoemButton);
-		
+
 		undoButton = new JButton("Undo");
 		bottomMenuPanel.add(undoButton);
 
@@ -162,6 +163,9 @@ public class Application extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				new PublishController(model, panel).process();
+				JOptionPane.showMessageDialog(null,
+						"Please check publish.png in the project!", "Publish",
+						JOptionPane.YES_OPTION);
 			}
 		});
 
@@ -291,7 +295,7 @@ public class Application extends JFrame {
 				new ReleasePoemController(model, Application.this).register();
 			}
 		});
-		
+
 		/**
 		 * Add word table into the frame
 		 */
