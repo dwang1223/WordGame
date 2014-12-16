@@ -81,7 +81,14 @@ public class ApplicationPanel extends JPanel {
 
 		/** Draw all words. */
 		for (Word word : model.getBoard().words) {
-			paintWord(offscreenGraphics, word);
+			if(word.isSearched() == false){
+				paintWord(offscreenGraphics, word);
+			}
+		}
+		for (Word word : model.getBoard().words) {
+			if(word.isSearched() == true){
+				paintWord(offscreenGraphics, word);
+			}
 		}
 	}
 
