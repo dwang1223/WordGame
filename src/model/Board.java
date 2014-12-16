@@ -25,9 +25,8 @@ public class Board implements Serializable {
 	public final static int heightOfUnprotectedArea = 200;
 	public final static int heightOfBottomMenu = 50;
 
-	
 	/** Listeners. */
-//	ArrayList<Listener> listeners = new ArrayList<Listener>();
+	// ArrayList<Listener> listeners = new ArrayList<Listener>();
 
 	/** Words being maintained. */
 	public ArrayList<Word> words = new ArrayList<Word>();
@@ -63,14 +62,14 @@ public class Board implements Serializable {
 	}
 
 	/** Add a listener. */
-//	public void addListener(Listener list) {
-//		listeners.add(list);
-//	}
+	// public void addListener(Listener list) {
+	// listeners.add(list);
+	// }
 
 	/** Remove a listener. */
-//	public void removeListener(Listener list) {
-//		listeners.remove(list);
-//	}
+	// public void removeListener(Listener list) {
+	// listeners.remove(list);
+	// }
 
 	/**
 	 * get the unprotected words
@@ -108,14 +107,14 @@ public class Board implements Serializable {
 	public void addWord(Word word) {
 		words.add(word);
 		// state changed
-//		notifyListeners();
+		// notifyListeners();
 	}
 
 	/** Remove word from board. */
 	public void removeWord(Word word) {
 		words.remove(word);
 		// state changed
-//		notifyListeners();
+		// notifyListeners();
 	}
 
 	/** Add row to board. */
@@ -142,7 +141,7 @@ public class Board implements Serializable {
 	public void removePoemByIndex(int index) {
 		poems.remove(index);
 	}
-	
+
 	/** Return shape that intersects (x,y) point. */
 	public Word findWord(int x, int y) {
 		for (Word word : words) {
@@ -171,7 +170,7 @@ public class Board implements Serializable {
 
 	/** Sort words using given comparator. */
 	public void sortUnprotectedWords(Comparator<Word> comparator) {
-		Collections.sort(this.getUnprotectedWords(), comparator);
+		Collections.sort(this.words, comparator);
 	}
 
 	/**
@@ -179,13 +178,13 @@ public class Board implements Serializable {
 	 * 
 	 * During this event, no new changes can happen.
 	 */
-//	void notifyListeners() {
-//		synchronized (listeners) {
-//			for (Listener list : listeners) {
-//				list.update();
-//			}
-//		}
-//	}
+	// void notifyListeners() {
+	// synchronized (listeners) {
+	// for (Listener list : listeners) {
+	// list.update();
+	// }
+	// }
+	// }
 
 	public static boolean isOutOfBound(Word word) {
 		int widthOfWord = word.getWidth();

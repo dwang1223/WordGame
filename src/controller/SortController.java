@@ -28,5 +28,6 @@ public class SortController {
 			WordModel model = (WordModel) h.getTable().getModel();
 			model.sort(fieldName);
 		}
+		table.refreshTable();
 	}
 }

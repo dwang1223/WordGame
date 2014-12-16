@@ -74,6 +74,7 @@ public class WordTable extends JPanel {
 		for (String h : headers) {
 			TableColumn col = new TableColumn(index++);
 			col.setHeaderValue(h);
+			col.setResizable(false);
 			columnModel.addColumn(col);
 		}
 		jtable.setColumnModel(columnModel);
@@ -81,6 +82,8 @@ public class WordTable extends JPanel {
 		// let's install a sorter and also make sure no one can rearrange
 		// columns
 		JTableHeader header = jtable.getTableHeader();
+		header.setResizingAllowed(false);
+		header.setReorderingAllowed(false);
 
 		// purpose of this sorter is to sort by columns.
 		header.addMouseListener(new MouseAdapter() {
@@ -148,6 +151,7 @@ public class WordTable extends JPanel {
 		for (String h : headers) {
 			TableColumn col = new TableColumn(index++);
 			col.setHeaderValue(h);
+			col.setResizable(false);
 			columnModel.addColumn(col);
 		}
 		jtable.setColumnModel(columnModel);
@@ -155,7 +159,8 @@ public class WordTable extends JPanel {
 		// let's install a sorter and also make sure no one can rearrange
 		// columns
 		JTableHeader header = jtable.getTableHeader();
-
+		header.setResizingAllowed(false);
+		header.setReorderingAllowed(false);
 		// purpose of this sorter is to sort by columns.
 		header.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
