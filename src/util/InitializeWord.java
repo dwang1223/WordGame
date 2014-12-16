@@ -32,8 +32,9 @@ public class InitializeWord {
 				randomY = (int) Math.round(Math.random()
 						* (Board.heightOfUnprotectedArea - 25)
 						+ Board.heightOfProtectedArea);
-				Word word = new Word(randomX, randomY, wordContentType[0],
-						wordContentType[1], false, false, false, false);
+				Word word = new Word(randomX, randomY,
+						wordContentType[0].trim(), wordContentType[1].trim(),
+						false, false, false, false);
 				initWords.add(word);
 				if (initWords.size() == 100) {
 					return initWords;
