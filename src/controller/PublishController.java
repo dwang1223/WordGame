@@ -12,7 +12,6 @@ import java.awt.image.ImageProducer;
 import java.awt.image.RGBImageFilter;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 
@@ -43,18 +42,14 @@ public class PublishController extends MouseAdapter {
 	public void process() {
 		Board board = model.getBoard();
 
-		// create image of just three random words. Note this is demonstration
+		// create image of all poems. Note this is demonstration
 		// shows the mechanics
 		// and you will have to adjust accordingly for your poem. This sample
 		// code is here because
 		// I don't have Poem objects in the WordMap application
-		ArrayList<Word> three = new ArrayList<Word>();
 		int minx = 999999, maxx = -99999;
 		int miny = 999999, maxy = -99999;
 		for (Word word : board.words) {
-			if (three.size() > 2) {
-				break;
-			}
 			if (word.getX() < minx) {
 				minx = word.getX();
 			}
@@ -67,18 +62,18 @@ public class PublishController extends MouseAdapter {
 			if (word.getY() + word.getHeight() > maxy) {
 				maxy = word.getY() + word.getHeight();
 			}
-
-			three.add(word);
 		}
 
 		// This full-sized image has wasted space. We will deal with later
 		BufferedImage bufferedImage = new BufferedImage(maxx, maxy,
 				BufferedImage.TYPE_INT_RGB);
 
-		// this just draws the three shapes into the graphics context
+		// this just draws the words which are in the poem into the graphics context
 		Graphics g = bufferedImage.getGraphics();
-		for (Word word : three) {
-			panel.paintWord(g, word);
+		for (Word word : board.words) {
+			if (word.isInPoem()) {
+				panel.paintWord(g, word);
+			}
 		}
 		g.dispose();
 
@@ -94,7 +89,7 @@ public class PublishController extends MouseAdapter {
 		// this places output in sample file. You should consider creating file
 		// names "on the fly..."
 		// if you do this, as well as store PNG files in an images/ directory
-		File out = new File("sample.png");
+		File out = new File("publish.png");
 		try {
 			ImageIO.write(transparent, "PNG", out);
 			System.out.println("Wrote file:" + out);
