@@ -79,15 +79,15 @@ public class Board implements Serializable {
 	 * 
 	 * @return
 	 */
-//	public ArrayList<Word> getUnprotectedWords() {
-//		ArrayList<Word> unprotectedWords = new ArrayList<Word>();
-//		for (Word word : words) {
-//			if (word.isProtected() == false) {
-//				unprotectedWords.add(word);
-//			}
-//		}
-//		return unprotectedWords;
-//	}
+	public ArrayList<Word> getUnprotectedWords() {
+		ArrayList<Word> unprotectedWords = new ArrayList<Word>();
+		for (Word word : words) {
+			if (word.isProtected() == false) {
+				unprotectedWords.add(word);
+			}
+		}
+		return unprotectedWords;
+	}
 
 	/**
 	 * set isSearched of word through keyWord
@@ -106,22 +106,22 @@ public class Board implements Serializable {
 		return searchedWords;
 	}
 
-	// public BoardMemento getState() {
-	// return new BoardMemento(words);
-	// }
+//	public BoardMemento getState() {
+//		return new BoardMemento(words);
+//	}
 
 	/** Add word to board. */
 	public void addWord(Word word) {
 		words.add(word);
 		// state changed
-		// notifyListeners();
+//		notifyListeners();
 	}
 
 	/** Remove word from board. */
 	public void removeWord(Word word) {
 		words.remove(word);
 		// state changed
-		// notifyListeners();
+//		notifyListeners();
 	}
 
 	/** Add row to board. */
@@ -148,7 +148,7 @@ public class Board implements Serializable {
 	public void removePoemByIndex(int index) {
 		poems.remove(index);
 	}
-
+	
 	/** Return shape that intersects (x,y) point. */
 	public Word findWord(int x, int y) {
 		for (Word word : words) {
