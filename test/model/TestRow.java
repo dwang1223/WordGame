@@ -19,10 +19,10 @@ public class TestRow extends TestCase {
 		Row row1 = new Row(word1, word2);
 		assertEquals(10, row1.getX());
 		assertEquals(10, row1.getY());
-		Row row2 = new Row(word1, word2);
-		Row row3 = new Row(row1, row2);
-		assertEquals(10, row3.getX());
-		assertEquals(10, row3.getY());
+		assertEquals(word1.getWidth() + word2.getWidth(), row1.getWidth());
+		assertEquals(word1.getHeight(), row1.getHeight());
+		word1.setInPoem(true);
+		assertEquals(true, row1.isInPoem());
 	}
 
 	public void testMove() {
@@ -58,6 +58,8 @@ public class TestRow extends TestCase {
 		row1.addWord(word3, false);
 		row1.addWord(word3, true);
 		row1.removeWord(word3);
+		row1.removeWord(word2);
+		row1.removeWord(word1);
 	}
 
 	public void testShowRow() {

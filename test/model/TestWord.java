@@ -10,12 +10,27 @@ import junit.framework.TestCase;
  */
 public class TestWord extends TestCase {
 	public void testConstruction() {
+		String content = "king";
+		String type = "noun";
 		Word word = new Word(10, 10, "king", "noun", false, false, false, false);
-		assertEquals("king", word.getContent());
+		assertEquals(content, word.getContent());
+		assertEquals(type, word.getType());
 		assertEquals(10, word.getX());
 		assertEquals(10, word.getY());
-		assertEquals(100, word.getWidth());
-		assertEquals(20, word.getHeight());
+		assertEquals(content.length() * 10, word.getWidth());
+		assertEquals(25, word.getHeight());
+		assertEquals(false, word.isProtected());
+		assertEquals(false, word.isInRow());
+		assertEquals(false, word.isInPoem());
+		assertEquals(false, word.isSearched());
+		word.setProtected(true);
+		word.setInRow(true);
+		word.setInPoem(true);
+		word.setSearched(true);
+		assertEquals(true, word.isProtected());
+		assertEquals(true, word.isInRow());
+		assertEquals(true, word.isInPoem());
+		assertEquals(true, word.isSearched());
 	}
 
 	public void testMove() {

@@ -27,6 +27,9 @@ public class TestPoem extends TestCase {
 		assertEquals(rowList, poem1.getRowList());
 		Poem poem2 = new Poem(row1, row2);
 		Poem poem3 = new Poem(poem1, poem2);
+		assertEquals(row1.getHeight() + row2.getHeight(), poem2.getHeight());
+		assertEquals(row1.getHeight() + row2.getHeight() + row1.getHeight()
+				+ row2.getHeight(), poem3.getHeight());
 	}
 
 	public void testSelected() {
@@ -51,6 +54,8 @@ public class TestPoem extends TestCase {
 		poem1.addRow(row2, true);
 		poem1.addRow(null, true);
 		poem1.removeRow(row1);
+		poem1.removeRow(row2);
+		poem1.removeRow(row2);
 	}
 
 	public void testLocation() {
@@ -64,22 +69,6 @@ public class TestPoem extends TestCase {
 		Row row2 = new Row(word3, word4);
 		Poem poem = new Poem(row1, row2);
 		poem.setLocation(110, 110);
-//		for (Row row : poem.getRowList()) {
-//			System.out.println("=======================");
-//			for (Word word : row.getWordList()) {
-//				System.out.println("wordX: " + word.getX() + "   wordY: "
-//						+ word.getY());
-//			}
-//		}
-		// row1.setLocation(110, 110);
-		// for (Word word : row1.getWordList()) {
-		// System.out.println("wordX: " + word.getX() + "   wordY: "
-		// + word.getY());
-		// }
-		// System.out.println("word1X: " + word1.getX() + "   word1Y: "
-		// + word1.getY());
-		// System.out.println("word2X: " + word2.getX() + "   word2Y: "
-		// + word2.getY());
 	}
 
 	public void testShowPoem() {
@@ -94,8 +83,9 @@ public class TestPoem extends TestCase {
 		Poem poem1 = new Poem(row1, row2);
 		Poem poem2 = new Poem(row2, row1);
 		poem1.addPoem(poem2, true);
-//		poem1.addPoem(poem2, true);
+		// poem1.addPoem(poem2, true);
 		poem1.addPoem(poem2, false);
+		poem1.addPoem(null, true);
 		System.out.println("=============");
 		poem1.showPoem();
 		System.out.println("=============");

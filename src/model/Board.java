@@ -25,9 +25,6 @@ public class Board implements Serializable {
 	public final static int heightOfUnprotectedArea = 200;
 	public final static int heightOfBottomMenu = 50;
 
-	/** Listeners. */
-	// ArrayList<Listener> listeners = new ArrayList<Listener>();
-
 	/** Words being maintained. */
 	public ArrayList<Word> words = new ArrayList<Word>();
 	/** Rows being maintained. */
@@ -60,16 +57,6 @@ public class Board implements Serializable {
 		}
 		return null;
 	}
-
-	/** Add a listener. */
-	// public void addListener(Listener list) {
-	// listeners.add(list);
-	// }
-
-	/** Remove a listener. */
-	// public void removeListener(Listener list) {
-	// listeners.remove(list);
-	// }
 
 	/**
 	 * get the unprotected words
@@ -106,15 +93,11 @@ public class Board implements Serializable {
 	/** Add word to board. */
 	public void addWord(Word word) {
 		words.add(word);
-		// state changed
-		// notifyListeners();
 	}
 
 	/** Remove word from board. */
 	public void removeWord(Word word) {
 		words.remove(word);
-		// state changed
-		// notifyListeners();
 	}
 
 	/** Add row to board. */
@@ -172,19 +155,6 @@ public class Board implements Serializable {
 	public void sortUnprotectedWords(Comparator<Word> comparator) {
 		Collections.sort(this.words, comparator);
 	}
-
-	/**
-	 * Notify all listeners.
-	 * 
-	 * During this event, no new changes can happen.
-	 */
-	// void notifyListeners() {
-	// synchronized (listeners) {
-	// for (Listener list : listeners) {
-	// list.update();
-	// }
-	// }
-	// }
 
 	public static boolean isOutOfBound(Word word) {
 		int widthOfWord = word.getWidth();

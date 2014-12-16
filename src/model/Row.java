@@ -25,13 +25,6 @@ public class Row implements Serializable {
 		this.wordList.add(word2);
 	}
 
-	public Row(Row row1, Row row2) {
-		ArrayList<Word> wordList1 = row1.wordList;
-		ArrayList<Word> wordList2 = row2.wordList;
-		wordList1.addAll(wordList2);
-		this.wordList = wordList1;
-	}
-
 	public void setLocation(int x, int y) {
 		int xofWord = x;
 		int yofWord = y;
