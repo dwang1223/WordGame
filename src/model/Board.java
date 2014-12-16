@@ -79,15 +79,15 @@ public class Board implements Serializable {
 	 * 
 	 * @return
 	 */
-	public ArrayList<Word> getUnprotectedWords() {
-		ArrayList<Word> unprotectedWords = new ArrayList<Word>();
-		for (Word word : words) {
-			if (word.isProtected() == false) {
-				unprotectedWords.add(word);
-			}
-		}
-		return unprotectedWords;
-	}
+//	public ArrayList<Word> getUnprotectedWords() {
+//		ArrayList<Word> unprotectedWords = new ArrayList<Word>();
+//		for (Word word : words) {
+//			if (word.isProtected() == false) {
+//				unprotectedWords.add(word);
+//			}
+//		}
+//		return unprotectedWords;
+//	}
 
 	/**
 	 * set isSearched of word through keyWord
