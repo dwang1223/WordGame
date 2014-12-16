@@ -183,17 +183,17 @@ public class ApplicationPanel extends JPanel {
 					+ word.isSearched() + "   " + word.getX() + "   "
 					+ word.getY());
 		}
-		System.out.println("Rows");
-		for (Row row : rows) {
-			System.out.println("Row " + row.getWordList().get(0).getContent());
-			List<Word> wordList = row.getWordList();
-			for (Word word : wordList) {
-				System.out.println(word.getContent() + "   "
-						+ word.isProtected() + "   " + word.isInRow() + "   "
-						+ word.isInPoem() + "   " + word.isSearched() + "   "
-						+ word.getX() + "   " + word.getY());
-			}
-		}
+//		System.out.println("Rows");
+//		for (Row row : rows) {
+//			System.out.println("Row " + row.getWordList().get(0).getContent());
+//			List<Word> wordList = row.getWordList();
+//			for (Word word : wordList) {
+//				System.out.println(word.getContent() + "   "
+//						+ word.isProtected() + "   " + word.isInRow() + "   "
+//						+ word.isInPoem() + "   " + word.isSearched() + "   "
+//						+ word.getX() + "   " + word.getY());
+//			}
+//		}
 	}
 
 }

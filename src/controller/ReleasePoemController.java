@@ -92,13 +92,20 @@ public class ReleasePoemController extends MouseAdapter {
 							+ Board.heightOfProtectedArea);
 					w.setLocation(randomX, randomY);
 				}
+				r.getWordList().clear();
+				model.getBoard().removeRow(r);
 			}
+			poem.getRowList().clear();
+			model.getBoard().removePoem(poem);
+
 			RealMove realMove = new RealMove(originalBoard, model);
 			realMove.execute();
 			model.recordUndoMove(realMove);
 			model.clearRedoMoves();
+
 			// paint will happen once moves. This redraws state to prepare for
 			// paint
+			app.getWordTable().refreshTable();
 			panel.redraw();
 			panel.repaint();
 			return true;
