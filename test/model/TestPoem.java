@@ -83,7 +83,6 @@ public class TestPoem extends TestCase {
 		Poem poem1 = new Poem(row1, row2);
 		Poem poem2 = new Poem(row2, row1);
 		poem1.addPoem(poem2, true);
-		// poem1.addPoem(poem2, true);
 		poem1.addPoem(poem2, false);
 		poem1.addPoem(null, true);
 		System.out.println("=============");
