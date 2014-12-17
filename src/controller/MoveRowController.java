@@ -165,8 +165,6 @@ public class MoveRowController extends MouseAdapter {
 
 	/** Separate out this function for testing purposes. */
 	protected boolean release(int x, int y) {
-		Row selectedRow = model.getSelectedRow();
-
 		// now released we can create Move
 		RealMove realMove = new RealMove(originalBoard, model);
 		realMove.execute();
