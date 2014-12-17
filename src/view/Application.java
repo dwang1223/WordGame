@@ -12,6 +12,7 @@ import javax.swing.JPanel;
 
 import model.Board;
 import model.Model;
+import client.ClientApp;
 import controller.AddWordController;
 import controller.ConnectPoemController;
 import controller.ConnectRowController;
@@ -41,6 +42,7 @@ public class Application extends JFrame {
 	private static final long serialVersionUID = 5446646227285497514L;
 
 	/** Stores reference to model, so can use at anytime during GUI navigation. */
+	ClientApp client;
 	Model model;
 
 	JPanel topMenuPanel;
@@ -345,5 +347,13 @@ public class Application extends JFrame {
 	public WordTable getWordTable() {
 		return wordTable;
 	}
+
+	public void setClient(ClientApp client) {
+		this.client = client;
+	}
+
+	public ClientApp getClient() {
+		return this.client;
+	};
 
 }

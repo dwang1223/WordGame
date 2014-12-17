@@ -2,8 +2,6 @@ package model;
 
 import java.util.Stack;
 
-import broker.BrokerClient;
-
 /**
  * Model Class
  * 
@@ -20,15 +18,6 @@ public class Model {
 	Word selectedWord;
 	Row selectedRow;
 	Poem selectedPoem;
-
-	// diyu added
-	public int numberOfSwapWords;
-	public String requestMessage;
-	public BrokerClient broker;
-	public void setBrokerClient(BrokerClient broker) {
-		this.broker = broker;
-	}
-	// diyu added
 
 	public Model(Board b) {
 		board = b;
@@ -48,8 +37,6 @@ public class Model {
 
 	public void recordUndoMove(Move move) {
 		undoMoves.add(move);
-		// System.out
-		// .println("recordUndoMove_undoMoves size: " + undoMoves.size());
 	}
 
 	public Move removeLastUndoMove() {
@@ -58,10 +45,6 @@ public class Model {
 		}
 		Move undoMove = undoMoves.pop();
 		redoMoves.add(undoMove);
-		// System.out
-		// .println("recordUndoMove_undoMoves size: " + undoMoves.size());
-		// System.out
-		// .println("recordRedoMove_redoMoves size: " + redoMoves.size());
 		return undoMove;
 	}
 
@@ -71,10 +54,6 @@ public class Model {
 		}
 		Move redoMove = redoMoves.pop();
 		undoMoves.add(redoMove);
-		// System.out
-		// .println("recordUndoMove_undoMoves size: " + undoMoves.size());
-		// System.out
-		// .println("recordRedoMove_redoMoves size: " + redoMoves.size());
 		return redoMove;
 	}
 

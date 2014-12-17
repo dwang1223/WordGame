@@ -28,10 +28,22 @@ public class GetAmountOfSwapWordsController extends MouseAdapter {
 		String number = JOptionPane.showInputDialog(this.app,
                 "Type In A Number Of Words You Want To Swap", null);
 		try{
-			this.model.numberOfSwapWords = Integer.valueOf(number);
-			System.out.println("user input number is "+this.model.numberOfSwapWords);
+			if(Integer.valueOf(number)>=5){
+				JOptionPane.showMessageDialog(app,
+					    "cannot choose number out of five",
+					    "Exception",
+					    JOptionPane.ERROR_MESSAGE);
+				return;
+			}
+				
+			app.getClient().numberOfSwapWords = Integer.valueOf(number);
+			System.out.println("user input number is "+app.getClient().numberOfSwapWords);
 		}
 		catch(Exception e){
+			JOptionPane.showMessageDialog(app,
+				    "input is not a valid number...",
+				    "Exception",
+				    JOptionPane.ERROR_MESSAGE);
 			System.err.println("input number is not valid...");
 			return;
 		}

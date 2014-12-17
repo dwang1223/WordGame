@@ -35,6 +35,7 @@ public class LoginController extends MouseAdapter {
 
 	public void process() {
 		ClientApp client = new ClientApp(model, app);
+		app.setClient(client);
 		try {
 			client.execute();
 			// pr.setTitle();

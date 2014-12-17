@@ -22,7 +22,7 @@ import broker.util.MatchSwapMessage;
 import broker.util.Swap;
 
 public class ClientApp implements IHandleBrokerMessage {
-	BrokerClient broker;
+	public BrokerClient broker;
 	Board board;
 	ArrayList<Word> unprotectedWords;
 
@@ -30,6 +30,11 @@ public class ClientApp implements IHandleBrokerMessage {
 	ApplicationPanel panel;
 
 	Model model;
+
+	public int numberOfSwapWords;
+	public String requestMessage;
+
+	// public BrokerClient broker;
 
 	public ClientApp(Model model, Application app) {
 		this.model = model;
@@ -40,6 +45,10 @@ public class ClientApp implements IHandleBrokerMessage {
 		this.panel = app.getWordPanel();
 	}
 
+	public void setBrokerClient(BrokerClient broker) {
+		this.broker = broker;
+	}
+
 	// @Override
 	public void brokerGone() {
 		// TODO Auto-generated method stub
@@ -47,8 +56,9 @@ public class ClientApp implements IHandleBrokerMessage {
 	}
 
 	public void execute() throws IOException {
+//		broker = new BrokerClient("gheineman.cs.wpi.edu", 9172);
 		broker = new BrokerClient("localhost", 9172);
-		model.setBrokerClient(broker);
+		// model.setBrokerClient(broker);
 
 		System.out.println("id is" + broker.getID());
 
