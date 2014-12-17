@@ -7,6 +7,7 @@ import java.awt.event.MouseEvent;
 
 import model.Board;
 import model.Model;
+import model.RealMove;
 import model.Word;
 import util.CloneUtils;
 import view.Application;

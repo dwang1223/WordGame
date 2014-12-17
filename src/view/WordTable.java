@@ -6,8 +6,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -21,6 +23,8 @@ import javax.swing.table.TableColumnModel;
 
 import model.Board;
 import model.WordModel;
+import broker.util.IProtocol;
+import broker.util.Swap;
 import controller.SearchWordController;
 import controller.SortController;
 
@@ -41,9 +45,9 @@ public class WordTable extends JPanel {
 	JTextField searchTestField = null;
 	String keyWord = null;
 
-	public WordTable(Board board, ApplicationPanel panel) {
+	public WordTable(Board board, Application app) {
 		setLayout(new FlowLayout());
-		this.panel = panel;
+		this.panel = app.getWordPanel();
 		searchTestField = new JTextField(10);
 		searchButton = new JButton("search");
 
@@ -116,6 +120,87 @@ public class WordTable extends JPanel {
 
 				});
 
+		// di yu added
+		jtable.addMouseListener(new MouseAdapter() {
+			int count = 0;
+
+			ArrayList<String> offerTypes = new ArrayList<String>();
+			ArrayList<String> offerWords = new ArrayList<String>();
+			ArrayList<String> requestTypes = new ArrayList<String>();
+			ArrayList<String> requestWords = new ArrayList<String>();
+
+			public void mouseClicked(MouseEvent e) {
+
+				// System.out.println("length is"+requestTypes.length);
+				// System.out.println("the msg content is now "+msg);
+
+				if (count < app.model.numberOfSwapWords) {
+					if (e.getClickCount() == 2) {
+						int row = jtable.getSelectedRow();
+						// String cellmsg = jtable.getValueAt(row,
+						// 0).toString();
+						offerTypes.add(jtable.getValueAt(row, 1).toString());
+						offerWords.add(jtable.getValueAt(row, 0).toString());
+						count++;
+					}
+					try {
+						if (count >= app.model.numberOfSwapWords) {
+							count = 0;
+							for (int i = 0; i < app.model.numberOfSwapWords; i++) {
+								int index = i + 1;
+								String requestString = JOptionPane
+										.showInputDialog(app, index
+												+ ": give a input word", null);
+								requestTypes.add(requestString.split(",")[0]);
+								requestWords.add(requestString.split(",")[1]);
+							}
+							System.out.println("information......");
+
+							System.out.println(offerTypes);
+							System.out.println();
+							System.out.println(offerWords);
+							System.out.println();
+							System.out.println(requestTypes);
+							System.out.println();
+
+							System.out.println(requestWords);
+							Swap swapRequest = new Swap(app.model.broker
+									.getID(), "*", app.model.numberOfSwapWords,
+									offerTypes.toArray(new String[offerWords
+											.size()]), offerWords
+											.toArray(new String[offerWords
+													.size()]), requestTypes
+											.toArray(new String[offerWords
+													.size()]), requestWords
+											.toArray(new String[offerWords
+													.size()]));
+
+							String swapMsg = IProtocol.requestSwapMsg
+									+ IProtocol.separator
+									+ swapRequest.flatten();
+							app.model.broker.getBrokerOutput().println(swapMsg);
+							offerTypes.clear();
+							offerWords.clear();
+							requestTypes.clear();
+							requestWords.clear();
+							System.out.println("size sample is now"
+									+ offerTypes.size());
+						}
+					} catch (Exception es) {
+						System.err.println("invalid input, swap is aborted");
+						count = 0;
+						offerTypes.clear();
+						offerWords.clear();
+						requestTypes.clear();
+						requestWords.clear();
+						return;
+					}
+
+				}
+			}
+		});
+		// di yu added
+		
 		// add the scrolling Pane which encapsulates the JTable physical size
 		// limited
 		this.setPreferredSize(tableSize);

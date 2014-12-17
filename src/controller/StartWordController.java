@@ -1,10 +1,8 @@
 package controller;
 
-import java.awt.Toolkit;
 import java.awt.event.MouseAdapter;
 import java.util.ArrayList;
 
-import model.Board;
 import model.Model;
 import model.Word;
 import util.InitializeWord;
@@ -34,21 +32,12 @@ public class StartWordController extends MouseAdapter {
 	public void process() {
 		ArrayList<Word> initWords = InitializeWord.initWords();
 		for (Word word : initWords) {
-			boolean ok = true;
-			// judge whether out of bound
-			if (Board.isOutOfUnprotectedArea(word)) {
-				ok = false;
-			}
-			if (!ok) {
-				Toolkit.getDefaultToolkit().beep();
-			} else {
-				word.setProtected(false);
-				model.getBoard().addWord(word);
+			word.setProtected(false);
+			model.getBoard().addWord(word);
 
-				app.getWordTable().refreshTable();
-				panel.redraw();
-				panel.repaint();
-			}
+			app.getWordTable().refreshTable();
+			panel.redraw();
+			panel.repaint();
 		}
 	}
 

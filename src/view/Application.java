@@ -18,6 +18,8 @@ import controller.ConnectRowController;
 import controller.ConnectWordController;
 import controller.DisconnectRowController;
 import controller.DisconnectWordController;
+import controller.GetAmountOfSwapWordsController;
+import controller.LoginController;
 import controller.MovePoemController;
 import controller.MoveRowController;
 import controller.MoveWordController;
@@ -46,6 +48,8 @@ public class Application extends JFrame {
 	JPanel bottomMenuPanel;
 	WordTable wordTable;
 
+	JButton swapButton;
+	JButton loginButton;
 	JButton startButton;
 	JButton addButton;
 	JButton removeButton;
@@ -122,6 +126,12 @@ public class Application extends JFrame {
 				Board.heightOfBottomMenu);
 		bottomMenuPanel.setBackground(Color.RED);
 
+		swapButton = new JButton("swap");
+		bottomMenuPanel.add(swapButton);
+
+		loginButton = new JButton("Login");
+		bottomMenuPanel.add(loginButton);
+
 		startButton = new JButton("Start");
 		bottomMenuPanel.add(startButton);
 
@@ -148,6 +158,28 @@ public class Application extends JFrame {
 
 		pane.add(bottomMenuPanel);
 
+		swapButton.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				// register controller
+				new GetAmountOfSwapWordsController(model, Application.this)
+						.process();
+
+			}
+		});
+
+		loginButton.setEnabled(false);
+		loginButton.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				// register controller
+				new LoginController(model, Application.this).process();
+				loginButton.setEnabled(false);
+			}
+		});
+
 		startButton.addActionListener(new ActionListener() {
 
 			@Override
@@ -155,6 +187,7 @@ public class Application extends JFrame {
 				// register controller
 				new StartWordController(model, Application.this).process();
 				startButton.setEnabled(false);
+				loginButton.setEnabled(true);
 			}
 		});
 
@@ -300,7 +333,7 @@ public class Application extends JFrame {
 		 * Add word table into the frame
 		 */
 		// chen chen added
-		wordTable = new WordTable(model.getBoard(), panel);
+		wordTable = new WordTable(model.getBoard(), this);
 		wordTable.setBounds(700, 50, 300, 600);
 		pane.add(wordTable);
 	}

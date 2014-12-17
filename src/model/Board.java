@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.Iterator;
 
 /**
  * Board Class
@@ -120,11 +119,6 @@ public class Board implements Serializable {
 		poems.remove(poem);
 	}
 
-	/** Remove poem from board. */
-	public void removePoemByIndex(int index) {
-		poems.remove(index);
-	}
-
 	/** Return shape that intersects (x,y) point. */
 	public Word findWord(int x, int y) {
 		for (Word word : words) {
@@ -134,21 +128,6 @@ public class Board implements Serializable {
 		}
 
 		return null;
-	}
-
-	/** Return all words in the board. */
-	public Iterator<Word> iterator() {
-		return words.iterator();
-	}
-
-	/** Return the number of words on the board. */
-	public int wordSize() {
-		return words.size();
-	}
-
-	/** Return the given word by index position. */
-	public Word getWordByIndex(int index) {
-		return words.get(index);
 	}
 
 	/** Sort words using given comparator. */

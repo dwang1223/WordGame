@@ -2,7 +2,7 @@ package model;
 
 import java.util.Stack;
 
-import controller.Move;
+import broker.BrokerClient;
 
 /**
  * Model Class
@@ -20,6 +20,15 @@ public class Model {
 	Word selectedWord;
 	Row selectedRow;
 	Poem selectedPoem;
+
+	// diyu added
+	public int numberOfSwapWords;
+	public String requestMessage;
+	public BrokerClient broker;
+	public void setBrokerClient(BrokerClient broker) {
+		this.broker = broker;
+	}
+	// diyu added
 
 	public Model(Board b) {
 		board = b;

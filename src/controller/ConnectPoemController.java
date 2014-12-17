@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import model.Board;
 import model.Model;
 import model.Poem;
+import model.RealMove;
 import model.Row;
 import model.Word;
 import util.CloneUtils;
@@ -125,15 +126,7 @@ public class ConnectPoemController extends MouseAdapter {
 
 	/** Separate out this function for testing purposes. */
 	protected boolean drag(int x, int y) {
-		// no board? no behavior! No dragging of right-mouse buttons...
-		if (buttonType == MouseEvent.BUTTON3) {
-			return false;
-		}
-
 		Poem selectedPoem = model.getSelectedPoem();
-		if (selectedPoem == null) {
-			return false;
-		}
 
 		for (Row row : selectedPoem.getRowList()) {
 			for (Word word : row.getWordList()) {
@@ -188,9 +181,6 @@ public class ConnectPoemController extends MouseAdapter {
 	/** Separate out this function for testing purposes. */
 	protected boolean release(int x, int y) {
 		Poem selectedPoem = model.getSelectedPoem();
-		if (selectedPoem == null) {
-			return false;
-		}
 
 		ArrayList<Poem> poems = model.getBoard().poems;
 		Row firstRowofSelectedPoem = selectedPoem.getRowList().get(0);

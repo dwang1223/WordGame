@@ -1,6 +1,7 @@
 package controller;
 
 import model.Model;
+import model.Move;
 import view.Application;
 import view.ApplicationPanel;
 
@@ -22,15 +23,15 @@ public class RedoController {
 	}
 
 	public boolean process() {
-		Move m = model.removeLastRedoMove();
-		if (m == null) {
+		Move move = model.removeLastRedoMove();
+		if (move == null) {
 			return false;
 		}
 
-		m.redo();
+		move.redo();
 
 		// refresh table
-		app.getWordTable().refreshTable(m.getNewBoard());
+		app.getWordTable().refreshTable(move.getNewBoard());
 
 		// force board to redraw
 		canvas.redraw();

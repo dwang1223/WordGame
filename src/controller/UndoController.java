@@ -1,6 +1,7 @@
 package controller;
 
 import model.Model;
+import model.Move;
 import view.Application;
 import view.ApplicationPanel;
 
@@ -22,15 +23,15 @@ public class UndoController {
 	}
 
 	public boolean process() {
-		Move m = model.removeLastUndoMove();
-		if (m == null) {
+		Move move = model.removeLastUndoMove();
+		if (move == null) {
 			return false;
 		}
 
-		m.undo();
+		move.undo();
 
 		// refresh table
-		app.getWordTable().refreshTable(m.getOldBoard());
+		app.getWordTable().refreshTable(move.getOldBoard());
 
 		// force board to redraw
 		canvas.redraw();

@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 import model.Board;
 import model.Model;
+import model.RealMove;
 import model.Row;
 import model.Word;
 import util.CloneUtils;
@@ -123,14 +124,7 @@ public class MoveRowController extends MouseAdapter {
 
 	/** Separate out this function for testing purposes. */
 	protected boolean drag(int x, int y) {
-		// no board? no behavior! No dragging of right-mouse buttons...
-		if (buttonType == MouseEvent.BUTTON3) {
-			return false;
-		}
 		Row selectedRow = model.getSelectedRow();
-		if (selectedRow == null) {
-			return false;
-		}
 
 		for (Word word : selectedRow.getWordList()) {
 			panel.paintBackground(word);
@@ -172,9 +166,7 @@ public class MoveRowController extends MouseAdapter {
 	/** Separate out this function for testing purposes. */
 	protected boolean release(int x, int y) {
 		Row selectedRow = model.getSelectedRow();
-		if (selectedRow == null) {
-			return false;
-		}
+
 		// now released we can create Move
 		RealMove realMove = new RealMove(originalBoard, model);
 		realMove.execute();

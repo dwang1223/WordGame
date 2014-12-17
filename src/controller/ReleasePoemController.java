@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import model.Board;
 import model.Model;
 import model.Poem;
+import model.RealMove;
 import model.Row;
 import model.Word;
 import util.CloneUtils;
