@@ -137,10 +137,6 @@ public class DisconnectWordController extends MouseAdapter {
 
 	/** Separate out this function for testing purposes. */
 	protected boolean drag(int x, int y) {
-		// no board? no behavior! No dragging of right-mouse buttons...
-		if (buttonType == MouseEvent.BUTTON3) {
-			return false;
-		}
 		Word selected = model.getSelectedWord();
 
 		if (selected == null) {
@@ -181,9 +177,6 @@ public class DisconnectWordController extends MouseAdapter {
 	/** Separate out this function for testing purposes. */
 	protected boolean release(int x, int y) {
 		Word selected = model.getSelectedWord();
-		if (selected == null) {
-			return false;
-		}
 
 		// now released we can create Move
 		model.getBoard().addWord(selected);

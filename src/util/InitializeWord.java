@@ -36,7 +36,7 @@ public class InitializeWord {
 						wordContentType[0].trim(), wordContentType[1].trim(),
 						false, false, false, false);
 				initWords.add(word);
-				if (initWords.size() == 5) {
+				if (initWords.size() == 1) {
 					return initWords;
 				}
 			}

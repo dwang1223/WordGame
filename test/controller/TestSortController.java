@@ -1,7 +1,6 @@
 package controller;
 
 import java.awt.Point;
-import java.awt.event.MouseEvent;
 
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableColumnModel;
@@ -10,9 +9,19 @@ import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 
 import junit.framework.TestCase;
-import view.*;
-import model.*;
+import model.Board;
+import model.Model;
+import model.Word;
+import model.WordModel;
+import view.Application;
+import view.WordTable;
 
+/**
+ * This is the test case for testing SortController
+ * 
+ * @author Chen
+ *
+ */
 public class TestSortController extends TestCase {
 
 	public void testConstruction() {

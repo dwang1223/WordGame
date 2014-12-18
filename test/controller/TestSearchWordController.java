@@ -1,10 +1,16 @@
 package controller;
 
-import view.Application;
 import junit.framework.TestCase;
-import model.*;
-import view.*;
+import model.Board;
+import model.Model;
+import model.Word;
+import view.ApplicationPanel;
 
+/**
+ * This is test case for testing SearchWordController
+ * @author Chen
+ *
+ */
 public class TestSearchWordController extends TestCase {
 	
 	public void testConstruction() {

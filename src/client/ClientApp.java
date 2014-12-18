@@ -34,8 +34,6 @@ public class ClientApp implements IHandleBrokerMessage {
 	public int numberOfSwapWords;
 	public String requestMessage;
 
-	// public BrokerClient broker;
-
 	public ClientApp(Model model, Application app) {
 		this.model = model;
 		this.board = model.getBoard();
@@ -56,16 +54,14 @@ public class ClientApp implements IHandleBrokerMessage {
 	}
 
 	public void execute() throws IOException {
-//		broker = new BrokerClient("gheineman.cs.wpi.edu", 9172);
+		// broker = new BrokerClient("gheineman.cs.wpi.edu", 9172);
 		broker = new BrokerClient("localhost", 9172);
-		// model.setBrokerClient(broker);
-
-		System.out.println("id is" + broker.getID());
 
 		if (!broker.connect()) {
 			System.err.println("unable to connect to broker");
 			broker.shutdown();
 		}
+		System.out.println("id is" + broker.getID());
 
 		// at this point we are connected, and we will block waiting for
 		// any messages from the broker. These will be sent to the process
