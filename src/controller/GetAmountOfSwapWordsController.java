@@ -2,14 +2,18 @@ package controller;
 
 import java.awt.event.MouseAdapter;
 
-
 import javax.swing.JOptionPane;
 
 import model.Model;
 import view.Application;
 import view.ApplicationPanel;
 
-
+/**
+ * GetAmountOfSwapWordsController
+ * 
+ * @author Di Yu
+ *
+ */
 public class GetAmountOfSwapWordsController extends MouseAdapter {
 
 	/** Needed for controller behavior. */
@@ -25,26 +29,23 @@ public class GetAmountOfSwapWordsController extends MouseAdapter {
 	}
 
 	public void process() {
+		this.app.getClient().swapRequested = true;
 		String number = JOptionPane.showInputDialog(this.app,
-                "Type In A Number Of Words You Want To Swap", null);
-		try{
-			if(Integer.valueOf(number)>=5){
+				"Type In A Number Of Words You Want To Swap", null);
+		try {
+			if (Integer.valueOf(number) >= 5) {
 				JOptionPane.showMessageDialog(app,
-					    "cannot choose number out of five",
-					    "Exception",
-					    JOptionPane.ERROR_MESSAGE);
+						"cannot choose number out of five", "Exception",
+						JOptionPane.ERROR_MESSAGE);
 				return;
 			}
-				
+
 			app.getClient().numberOfSwapWords = Integer.valueOf(number);
-			System.out.println("user input number is "+app.getClient().numberOfSwapWords);
-		}
-		catch(Exception e){
+		} catch (Exception e) {
 			JOptionPane.showMessageDialog(app,
-				    "input is not a valid number...",
-				    "Exception",
-				    JOptionPane.ERROR_MESSAGE);
-			System.err.println("input number is not valid...");
+					"input is not a valid number...", "Exception",
+					JOptionPane.ERROR_MESSAGE);
+			e.printStackTrace();
 			return;
 		}
 	}

@@ -1,17 +1,12 @@
 package controller;
 
-import java.awt.Toolkit;
 import java.awt.event.MouseAdapter;
 import java.io.IOException;
-import java.util.ArrayList;
 
-import client.ClientApp;
-import model.Board;
 import model.Model;
-import model.Word;
-import util.InitializeWord;
 import view.Application;
 import view.ApplicationPanel;
+import client.ClientApp;
 
 /**
  * LoginController Class
@@ -38,10 +33,8 @@ public class LoginController extends MouseAdapter {
 		app.setClient(client);
 		try {
 			client.execute();
-			// pr.setTitle();
-		} catch (IOException e1) {
-			// TODO Auto-generated catch block
-			System.err.println("System crashed due to a client exception...");
+		} catch (IOException e) {
+			e.printStackTrace();
 			System.exit(1);
 		}
 	}

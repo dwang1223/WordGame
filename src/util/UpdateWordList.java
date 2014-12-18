@@ -5,6 +5,12 @@ import java.util.ArrayList;
 import model.Board;
 import model.Word;
 
+/**
+ * UpdateWordList Class
+ * 
+ * @author Di Yu
+ *
+ */
 public class UpdateWordList {
 	/*
 	 * update the global word list. If this word is in unprotected area and it
@@ -16,7 +22,6 @@ public class UpdateWordList {
 			if (wordList.get(i).getContent().equals(wordArray[index])
 					&& !wordList.get(i).isProtected())
 				wordList.remove(i);
-			return;
 		}
 	}
 

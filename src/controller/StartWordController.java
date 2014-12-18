@@ -30,7 +30,7 @@ public class StartWordController extends MouseAdapter {
 	}
 
 	public void process() {
-		ArrayList<Word> initWords = InitializeWord.initWords();
+		ArrayList<Word> initWords = InitializeWord.initWords(50);
 		for (Word word : initWords) {
 			word.setProtected(false);
 			model.getBoard().addWord(word);

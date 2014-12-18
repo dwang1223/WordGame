@@ -15,7 +15,7 @@ import model.Word;
  */
 public class InitializeWord {
 
-	public static ArrayList<Word> initWords() {
+	public static ArrayList<Word> initWords(int sizeofWords) {
 		ArrayList<Word> initWords = new ArrayList<Word>();
 		BufferedReader br;
 		int randomX;
@@ -36,7 +36,7 @@ public class InitializeWord {
 						wordContentType[0].trim(), wordContentType[1].trim(),
 						false, false, false, false);
 				initWords.add(word);
-				if (initWords.size() == 1) {
+				if (initWords.size() == sizeofWords) {
 					return initWords;
 				}
 			}

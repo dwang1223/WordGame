@@ -13,7 +13,7 @@ import junit.framework.TestCase;
  */
 public class TestInitializeWord extends TestCase {
 	public void testInitializeWord() {
-		ArrayList<Word> initWords = InitializeWord.initWords();
+		ArrayList<Word> initWords = InitializeWord.initWords(100);
 		InitializeWord initializeWord = new InitializeWord();
 	}
 }
