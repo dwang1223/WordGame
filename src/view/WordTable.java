@@ -54,7 +54,7 @@ public class WordTable extends JPanel {
 		wordModel = new WordModel(board);
 
 		// the proposed dimension of the UI
-		tableSize = new Dimension(280, 550);
+		tableSize = new Dimension(280, 500);
 
 		// Scrollable panel will enclose the JTable and support scrolling
 		// vertically

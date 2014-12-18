@@ -45,7 +45,6 @@ public class GetAmountOfSwapWordsController extends MouseAdapter {
 			JOptionPane.showMessageDialog(app,
 					"input is not a valid number...", "Exception",
 					JOptionPane.ERROR_MESSAGE);
-			e.printStackTrace();
 			return;
 		}
 	}

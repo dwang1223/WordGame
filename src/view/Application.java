@@ -128,9 +128,6 @@ public class Application extends JFrame {
 				Board.heightOfBottomMenu);
 		bottomMenuPanel.setBackground(Color.RED);
 
-		swapButton = new JButton("swap");
-		bottomMenuPanel.add(swapButton);
-
 		loginButton = new JButton("Login");
 		bottomMenuPanel.add(loginButton);
 
@@ -160,17 +157,6 @@ public class Application extends JFrame {
 
 		pane.add(bottomMenuPanel);
 
-		swapButton.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				// register controller
-				new GetAmountOfSwapWordsController(model, Application.this)
-						.process();
-
-			}
-		});
-
 		loginButton.setEnabled(false);
 		loginButton.addActionListener(new ActionListener() {
 
@@ -179,6 +165,7 @@ public class Application extends JFrame {
 				// register controller
 				new LoginController(model, Application.this).process();
 				loginButton.setEnabled(false);
+				swapButton.setEnabled(true);
 			}
 		});
 
@@ -338,6 +325,21 @@ public class Application extends JFrame {
 		wordTable = new WordTable(model.getBoard(), this);
 		wordTable.setBounds(700, 50, 300, 600);
 		pane.add(wordTable);
+
+		swapButton = new JButton("Swap");
+		wordTable.add(swapButton);
+
+		swapButton.setEnabled(false);
+		swapButton.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				// register controller
+				new GetAmountOfSwapWordsController(model, Application.this)
+						.process();
+
+			}
+		});
 	}
 
 	public ApplicationPanel getWordPanel() {

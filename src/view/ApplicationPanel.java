@@ -176,19 +176,19 @@ public class ApplicationPanel extends JPanel {
 		}
 	}
 
-	public void showBoardState() {
-		ArrayList<Word> words = model.getBoard().words;
-		ArrayList<Row> rows = model.getBoard().rows;
-		ArrayList<Poem> poems = model.getBoard().poems;
-		System.out.println("Words");
-		System.out
-				.println("content   isProtected   isInRow   isInPoem   isSearched   x   y");
-		for (Word word : words) {
-			System.out.println(word.getContent() + "   " + word.isProtected()
-					+ "   " + word.isInRow() + "   " + word.isInPoem() + "   "
-					+ word.isSearched() + "   " + word.getX() + "   "
-					+ word.getY());
-		}
+//	public void showBoardState() {
+//		ArrayList<Word> words = model.getBoard().words;
+//		ArrayList<Row> rows = model.getBoard().rows;
+//		ArrayList<Poem> poems = model.getBoard().poems;
+//		System.out.println("Words");
+//		System.out
+//				.println("content   isProtected   isInRow   isInPoem   isSearched   x   y");
+//		for (Word word : words) {
+//			System.out.println(word.getContent() + "   " + word.isProtected()
+//					+ "   " + word.isInRow() + "   " + word.isInPoem() + "   "
+//					+ word.isSearched() + "   " + word.getX() + "   "
+//					+ word.getY());
+//		}
 //		System.out.println("Rows");
 //		for (Row row : rows) {
 //			System.out.println("Row " + row.getWordList().get(0).getContent());
@@ -200,6 +200,6 @@ public class ApplicationPanel extends JPanel {
 //						+ word.getX() + "   " + word.getY());
 //			}
 //		}
-	}
+//	}
 
 }

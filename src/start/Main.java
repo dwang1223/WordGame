@@ -78,15 +78,6 @@ public class Main {
 		// In this example, we show the former.
 		final Application pr = new Application(model);
 
-		// connect to broker and store reference somewhere. Doesn't feel
-		// right to associate with model, so I'll associate with Application
-		// BrokerManager bm = new BrokerManager(pr, model);
-		// if (bm.connect("localhost")) {
-		// pr.setBroker(bm);
-		// } else if (bm.connect("gheineman.cs.wpi.edu")) {
-		// pr.setBroker(bm);
-		// }
-
 		// This controller is an anonymous class who responds to closing
 		// events by exiting the application.
 		pr.addWindowListener(new WindowAdapter() {
